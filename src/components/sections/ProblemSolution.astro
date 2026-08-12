@@ -1,0 +1,68 @@
+---
+import Icon from "../ui/Icon.astro";
+---
+
+<section class="border-t border-slate/8 bg-cloud py-24">
+  <div class="container-rock">
+    <div class="grid gap-14 lg:grid-cols-2 lg:gap-20">
+      <div>
+        <span class="section-eyebrow">Das Problem</span>
+        <h2 class="mt-5 font-display text-3xl font-bold leading-tight text-slate md:text-4xl">
+          Großagenturen sind teuer,
+          <span class="text-coral">träge</span> und austauschbar.
+        </h2>
+        <p class="mt-5 text-lg leading-relaxed text-slate-soft">
+          5.000 € bis 15.000 € monatlicher Retainer — für Kampagnen, die durch drei
+          Freigabeschleifen wandern, bevor sie live gehen. Ihre Marke wird zur Nummer in einer
+          Kundenliste. Und jede Idee kostet zusätzlich.
+        </p>
+        <ul class="mt-8 space-y-4">
+          {
+            [
+              "Monatliche Retainer ohne Ergebnis-Garantie",
+              "Lange Abstimmungswege, langsame Umsetzung",
+              "Keine Kontrolle über Ihre eigenen Daten & Prozesse",
+            ].map((point) => (
+              <li class="flex items-start gap-3 text-slate-soft">
+                <span class="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-coral/10 text-coral">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                    <path d="M18 6 6 18M6 6l12 12" stroke-linecap="round" />
+                  </svg>
+                </span>
+                {point}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <span class="section-eyebrow">Die Lösung</span>
+        <h2 class="mt-5 font-display text-3xl font-bold leading-tight text-slate md:text-4xl">
+          Ihre <span class="text-miami-dark">autarke</span> Inhouse-KI-Marketingabteilung.
+        </h2>
+        <p class="mt-5 text-lg leading-relaxed text-slate-soft">
+          Wir installieren die Marketinginfrastruktur der Zukunft direkt in Ihrem Unternehmen.
+          Jahrzehntelange Marketing-Expertise, gesteuert auf Knopfdruck — für maximale Reichweite,
+          Neukunden und Markenpräsenz.
+        </p>
+        <ul class="mt-8 space-y-4">
+          {
+            [
+              "Ein Senior-Stratege führt Qualität & Strategie persönlich",
+              "162 AI-Agents setzen operativ in Minuten statt Wochen um",
+              "Sie besitzen das System — kein Mietmodell, ein bilanzierbares Asset",
+            ].map((point) => (
+              <li class="flex items-start gap-3 text-slate-soft">
+                <span class="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-miami/15 text-miami-dark">
+                  <Icon name="check" size={11} />
+                </span>
+                {point}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

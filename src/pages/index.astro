@@ -1,0 +1,23 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.tsx";
+import ProblemSolution from "../components/sections/ProblemSolution.astro";
+import Pillars from "../components/sections/Pillars.astro";
+import AgentsShowcase from "../components/sections/AgentsShowcase.astro";
+import ModulesOverview from "../components/sections/ModulesOverview.astro";
+import ObjectionsProof from "../components/sections/ObjectionsProof.astro";
+import FinalCTA from "../components/sections/FinalCTA.astro";
+---
+
+<Layout
+  title="Ihre KI-Marketingabteilung"
+  description="ROCK IT UP Media baut autarke, maßgeschneiderte KI-Marketinginfrastrukturen direkt in Ihrem Unternehmen — 1 Senior Strategist, 162 AI-Agents, EU-vServer, DSGVO-konform."
+>
+  <Hero client:load />
+  <ProblemSolution />
+  <Pillars />
+  <AgentsShowcase />
+  <ModulesOverview />
+  <ObjectionsProof />
+  <FinalCTA />
+</Layout>

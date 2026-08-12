@@ -1,0 +1,51 @@
+---
+import Icon from "../ui/Icon.astro";
+
+const pillars = [
+  {
+    icon: "users" as const,
+    title: "Human-in-the-Loop",
+    text: "Ein krisenerprobter Senior-Stratege mit jahrzehntelanger Marketing-Expertise behält Führung, Strategie und Qualitätskontrolle.",
+  },
+  {
+    icon: "zap" as const,
+    title: "162 AI-Agents Powerhouse",
+    text: "Blitzschnelle, hochspezialisierte operative Umsetzung — von Copy bis Code, rund um die Uhr einsatzbereit.",
+  },
+  {
+    icon: "globe" as const,
+    title: "100 % Ortsunabhängig",
+    text: "Digital, papierlos, weltweit einsatzbereit — mit globalem Experten-Backup-Netzwerk als Human-Safety-Net.",
+  },
+  {
+    icon: "shield-check" as const,
+    title: "Datensouveränität & DSGVO",
+    text: "Schlüsselfertige Inhouse-Architekturen auf EU-vServern statt unkontrollierter Datenweitergabe an offene US-Modelle.",
+  },
+];
+---
+
+<section class="py-24">
+  <div class="container-rock">
+    <div class="mx-auto max-w-2xl text-center">
+      <span class="section-eyebrow">Das Fundament</span>
+      <h2 class="mt-5 font-display text-3xl font-bold leading-tight text-slate md:text-4xl">
+        Vier Säulen, die den Unterschied machen
+      </h2>
+    </div>
+
+    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        pillars.map((p) => (
+          <div class="card">
+            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-miami/10 text-miami-dark">
+              <Icon name={p.icon} size={22} />
+            </div>
+            <h3 class="mt-5 font-display text-lg font-semibold text-slate">{p.title}</h3>
+            <p class="mt-2.5 text-sm leading-relaxed text-slate-soft">{p.text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

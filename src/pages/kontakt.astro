@@ -1,0 +1,122 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/ui/Icon.astro";
+
+const steps = [
+  {
+    title: "Vertrauliches Erstgespräch",
+    text: "45 Minuten mit dem Senior-Strategen — kein Verkaufsgespräch, sondern eine ehrliche Standortbestimmung.",
+  },
+  {
+    title: "Live-Demonstration & ROI-Berechnung",
+    text: "Sie sehen die 162 AI-Agents live im Einsatz und erhalten eine individuelle Amortisationsrechnung.",
+  },
+  {
+    title: "Ihr persönlicher Blueprint",
+    text: "Ein maßgeschneiderter Fahrplan, welches Modul-Setup für Ihr Unternehmen den größten Hebel bringt.",
+  },
+];
+---
+
+<Layout
+  title="Kontakt & Blueprint"
+  description="Buchen Sie den NYC AI-Department Blueprint — ein vertrauliches, digitales Sparring-Gespräch auf C-Level-Ebene mit Live-Demonstration und individueller ROI-Berechnung."
+>
+  <section class="relative overflow-hidden bg-white pb-20 pt-20">
+    <div class="glow-orb -left-32 top-0 h-96 w-96 bg-miami/20"></div>
+    <div class="glow-orb -right-24 top-40 h-72 w-72 bg-coral/10"></div>
+
+    <div class="container-rock relative">
+      <div class="mx-auto max-w-2xl text-center">
+        <span class="section-eyebrow">Exklusivitäts-Garantie: max. 2–3 Setups / Monat</span>
+        <h1 class="mt-6 font-display text-4xl font-bold leading-tight text-slate md:text-5xl">
+          NYC AI-Department Blueprint
+        </h1>
+        <p class="mt-6 text-lg leading-relaxed text-slate-soft">
+          Ein vertraulicher, digitaler Sparring-Termin auf C-Level-Ebene — mit Live-Demonstration
+          der 162 AI-Agents und individueller ROI-Berechnung für Ihr Unternehmen.
+        </p>
+      </div>
+
+      <div class="mx-auto mt-14 grid max-w-5xl gap-6 sm:grid-cols-3">
+        {
+          steps.map((s, i) => (
+            <div class="card">
+              <span class="font-mono text-xs text-miami-dark">Schritt {i + 1}</span>
+              <h3 class="mt-2 font-display text-base font-semibold text-slate">{s.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-slate-soft">{s.text}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="mx-auto mt-16 grid max-w-5xl gap-10 rounded-[2rem] border border-slate/8 bg-cloud p-8 sm:p-12 lg:grid-cols-[1fr_1.2fr]">
+        <div>
+          <h2 class="font-display text-2xl font-bold text-slate">Sprechen wir über Ihr Setup</h2>
+          <p class="mt-4 text-sm leading-relaxed text-slate-soft">
+            Füllen Sie das Formular aus — Ihr E-Mail-Programm öffnet sich mit einer vorbereiteten
+            Anfrage direkt an unseren Senior-Strategen.
+          </p>
+
+          <div class="mt-8 space-y-5">
+            <a href="mailto:christoph@rockitup.media" class="flex items-center gap-3 text-sm text-slate transition-colors hover:text-miami-dark">
+              <span class="flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate">
+                <Icon name="arrow-right" size={16} class="-rotate-45" />
+              </span>
+              christoph@rockitup.media
+            </a>
+            <div class="flex items-center gap-3 text-sm text-slate-soft">
+              <span class="flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate">
+                <Icon name="globe" size={16} />
+              </span>
+              100&nbsp;% digital &amp; ortsunabhängig
+            </div>
+            <div class="flex items-center gap-3 text-sm text-slate-soft">
+              <span class="flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate">
+                <Icon name="shield-check" size={16} />
+              </span>
+              EU-vServer · DSGVO-konform
+            </div>
+          </div>
+        </div>
+
+        <form
+          action="mailto:christoph@rockitup.media"
+          method="post"
+          enctype="text/plain"
+          class="grid gap-4 rounded-3xl border border-slate/8 bg-white p-7"
+        >
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="grid gap-1.5">
+              <label for="name" class="font-mono text-xs uppercase tracking-wide text-slate-soft">Name</label>
+              <input id="name" name="Name" type="text" required class="rounded-xl border border-slate/12 px-4 py-3 text-sm text-slate outline-none focus:border-miami" />
+            </div>
+            <div class="grid gap-1.5">
+              <label for="company" class="font-mono text-xs uppercase tracking-wide text-slate-soft">Unternehmen</label>
+              <input id="company" name="Unternehmen" type="text" required class="rounded-xl border border-slate/12 px-4 py-3 text-sm text-slate outline-none focus:border-miami" />
+            </div>
+          </div>
+          <div class="grid gap-1.5">
+            <label for="email" class="font-mono text-xs uppercase tracking-wide text-slate-soft">E-Mail</label>
+            <input id="email" name="E-Mail" type="email" required class="rounded-xl border border-slate/12 px-4 py-3 text-sm text-slate outline-none focus:border-miami" />
+          </div>
+          <div class="grid gap-1.5">
+            <label for="message" class="font-mono text-xs uppercase tracking-wide text-slate-soft">Ihre Situation</label>
+            <textarea
+              id="message"
+              name="Nachricht"
+              rows="4"
+              placeholder="Was beschäftigt Sie aktuell im Marketing?"
+              class="resize-none rounded-xl border border-slate/12 px-4 py-3 text-sm text-slate outline-none focus:border-miami"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn-primary mt-2 justify-center">
+            Blueprint-Anfrage senden
+            <Icon name="arrow-right" size={16} />
+          </button>
+          <p class="text-center text-xs text-slate-soft/70">Unverbindlich. Antwort in der Regel innerhalb von 24 Stunden.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</Layout>

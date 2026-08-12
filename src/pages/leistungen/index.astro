@@ -1,0 +1,65 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Icon from "../../components/ui/Icon.astro";
+import ModulesOverview from "../../components/sections/ModulesOverview.astro";
+import { retainers } from "../../data/modules";
+---
+
+<Layout
+  title="Leistungen & Module"
+  description="Sechs Module für Ihre autarke KI-Marketinginfrastruktur — einzeln buchbar oder als vollständiges NYC AI-Department Blueprint. Plus standalone Retainer-Services."
+>
+  <section class="relative overflow-hidden bg-white pb-16 pt-20">
+    <div class="glow-orb -left-32 top-0 h-96 w-96 bg-miami/20"></div>
+    <div class="container-rock relative mx-auto max-w-3xl text-center">
+      <span class="section-eyebrow">Leistungen</span>
+      <h1 class="mt-6 font-display text-4xl font-bold leading-tight text-slate md:text-5xl">
+        Der Baukasten für Ihre Inhouse-KI-Abteilung
+      </h1>
+      <p class="mt-6 text-lg leading-relaxed text-slate-soft">
+        Sechs Module, die aufeinander aufbauen — von der Brand DNA bis zur laufenden Evolution
+        Ihres Systems. Buchen Sie einzeln, im Bundle oder als vollständiges Full-Setup.
+      </p>
+    </div>
+  </section>
+
+  <ModulesOverview />
+
+  <section class="border-t border-slate/8 bg-cloud py-24">
+    <div class="container-rock">
+      <div class="mx-auto max-w-2xl text-center">
+        <span class="section-eyebrow">Standalone Services</span>
+        <h2 class="mt-5 font-display text-3xl font-bold leading-tight text-slate md:text-4xl">
+          Retainer &amp; Notfall-Mandate
+        </h2>
+        <p class="mt-5 text-lg leading-relaxed text-slate-soft">
+          Laufende Betreuung außerhalb des Full-Setups — planbar buchbar, monatlich kündbar.
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-6 md:grid-cols-2">
+        {
+          retainers.map((r) => (
+            <a href={`/leistungen/${r.slug}`} class="card group flex items-start gap-5 bg-white">
+              <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-slate/6 text-slate">
+                <Icon name={r.icon as any} size={20} />
+              </div>
+              <div class="flex-1">
+                <h3 class="font-display text-base font-semibold text-slate">{r.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-slate-soft">{r.summary}</p>
+                <div class="mt-4 flex items-center justify-between">
+                  <span class="font-display text-base font-bold text-slate">
+                    {r.price} <span class="text-xs font-normal text-slate-soft">/ {r.priceSuffix.replace("pro ", "")}</span>
+                  </span>
+                  <span class="flex items-center gap-1 font-display text-sm font-medium text-miami-dark opacity-0 transition-opacity group-hover:opacity-100">
+                    Details <Icon name="arrow-right" size={14} />
+                  </span>
+                </div>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Layout>

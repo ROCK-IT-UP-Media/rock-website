@@ -1,0 +1,64 @@
+---
+import Icon from "../ui/Icon.astro";
+import { modules, flagship } from "../../data/modules";
+
+const colorMap: Record<string, string> = {
+  miami: "bg-miami/10 text-miami-dark",
+  coral: "bg-coral/10 text-coral-dark",
+  cyan: "bg-cyan/12 text-slate",
+  slate: "bg-slate/6 text-slate",
+};
+---
+
+<section class="border-t border-slate/8 py-24">
+  <div class="container-rock">
+    <div class="mx-auto max-w-2xl text-center">
+      <span class="section-eyebrow">Der Aufbau</span>
+      <h2 class="mt-5 font-display text-3xl font-bold leading-tight text-slate md:text-4xl">
+        Sechs Module. Ein autarkes System.
+      </h2>
+      <p class="mt-5 text-lg leading-relaxed text-slate-soft">
+        Einzeln buchbar oder als vollständiges {flagship.title} — jedes Modul baut auf dem
+        vorherigen auf und macht Sie Schritt für Schritt unabhängig.
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {
+        modules.map((m) => (
+          <a href={`/leistungen/${m.slug}`} class="card group flex flex-col">
+            <div class="flex items-center justify-between">
+              <div class:list={["flex h-12 w-12 items-center justify-center rounded-2xl", colorMap[m.color]]}>
+                <Icon name={m.icon as any} size={22} />
+              </div>
+              <span class="font-mono text-xs text-slate/30">{m.number}</span>
+            </div>
+            <h3 class="mt-5 font-display text-lg font-semibold text-slate">{m.title}</h3>
+            <p class="mt-1 text-xs font-medium uppercase tracking-wide text-miami-dark">{m.tagline}</p>
+            <p class="mt-3 flex-1 text-sm leading-relaxed text-slate-soft">{m.summary}</p>
+            <div class="mt-6 flex items-center justify-between border-t border-slate/8 pt-5">
+              <span class="font-display text-lg font-bold text-slate">{m.price}</span>
+              <span class="flex items-center gap-1 font-display text-sm font-medium text-miami-dark opacity-0 transition-opacity group-hover:opacity-100">
+                Details <Icon name="arrow-right" size={14} />
+              </span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+
+    <div class="mx-auto mt-10 max-w-3xl rounded-3xl border border-coral/20 bg-coral/5 p-8 text-center sm:p-10">
+      <span class="badge border-coral/25 bg-coral/10 text-coral-dark">Flaggschiff</span>
+      <h3 class="mt-4 font-display text-2xl font-bold text-slate">{flagship.title}</h3>
+      <p class="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-soft">{flagship.description}</p>
+      <div class="mt-6 flex flex-col items-center gap-1">
+        <span class="font-display text-3xl font-bold text-slate">{flagship.price}</span>
+        <span class="font-mono text-xs text-slate-soft">{flagship.savings}</span>
+      </div>
+      <a href="/kontakt" class="btn-primary mt-7 inline-flex">
+        Blueprint-Termin sichern
+        <Icon name="arrow-right" size={16} />
+      </a>
+    </div>
+  </div>
+</section>

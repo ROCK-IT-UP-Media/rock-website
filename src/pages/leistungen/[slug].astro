@@ -1,0 +1,90 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Icon from "../../components/ui/Icon.astro";
+import { modules, retainers, type Module } from "../../data/modules";
+
+type RetainerItem = (typeof retainers)[number];
+
+export function getStaticPaths() {
+  const modulePaths = modules.map((m) => ({ params: { slug: m.slug }, props: { kind: "module" as const, item: m } }));
+  const retainerPaths = retainers.map((r) => ({ params: { slug: r.slug }, props: { kind: "retainer" as const, item: r } }));
+  return [...modulePaths, ...retainerPaths];
+}
+
+const { kind, item } = Astro.props as
+  | { kind: "module"; item: Module }
+  | { kind: "retainer"; item: RetainerItem };
+
+const otherModules = kind === "module" ? modules.filter((m) => m.slug !== item.slug).slice(0, 3) : [];
+const pageDescription = kind === "retainer" ? item.summary : item.description;
+---
+
+<Layout title={item.title} description={pageDescription}>
+  <section class="relative overflow-hidden bg-white pb-16 pt-16">
+    <div class="glow-orb -left-32 top-0 h-96 w-96 bg-miami/15"></div>
+    <div class="container-rock relative">
+      <a href="/leistungen" class="mb-8 inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wide text-slate-soft hover:text-miami-dark">
+        <Icon name="arrow-right" size={12} class="rotate-180" />
+        Alle Leistungen
+      </a>
+
+      <div class="grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:items-start">
+        <div>
+          {kind === "module" && (
+            <span class="section-eyebrow">Modul {item.number} &middot; {item.tagline}</span>
+          )}
+          {kind === "retainer" && <span class="section-eyebrow">Standalone Retainer</span>}
+
+          <h1 class="mt-6 font-display text-3xl font-bold leading-tight text-slate md:text-4xl">{item.title}</h1>
+          <p class="mt-6 text-lg leading-relaxed text-slate-soft">{item.description}</p>
+
+          {kind === "module" && "products" in item && (
+            <div class="mt-10">
+              <h2 class="font-display text-sm font-semibold uppercase tracking-wide text-slate/50">Enthaltene Produkte</h2>
+              <ul class="mt-4 divide-y divide-slate/8 rounded-2xl border border-slate/8">
+                {item.products.map((p: { name: string; price: string }) => (
+                  <li class="flex items-center justify-between px-5 py-4">
+                    <span class="text-sm text-slate">{p.name}</span>
+                    <span class="font-mono text-sm text-slate-soft">{p.price}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
+        <div class="sticky top-28 rounded-3xl border border-slate/8 bg-cloud p-8">
+          <p class="font-mono text-xs uppercase tracking-wide text-slate-soft">Investment</p>
+          <p class="mt-2 font-display text-4xl font-bold text-slate">{item.price}</p>
+          <p class="mt-1 text-sm text-slate-soft">{item.priceSuffix}</p>
+          {"savings" in item && item.savings && (
+            <p class="mt-4 rounded-xl bg-miami/10 px-4 py-3 text-sm text-miami-dark">{item.savings}</p>
+          )}
+          <a href="/kontakt" class="btn-primary mt-7 w-full">
+            Blueprint-Termin sichern
+            <Icon name="arrow-right" size={16} />
+          </a>
+          <p class="mt-4 text-center text-xs text-slate-soft/70">Unverbindliches Erstgespräch, keine versteckten Kosten.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {otherModules.length > 0 && (
+    <section class="border-t border-slate/8 bg-cloud py-20">
+      <div class="container-rock">
+        <h2 class="font-display text-2xl font-bold text-slate">Weitere Module</h2>
+        <div class="mt-8 grid gap-6 md:grid-cols-3">
+          {otherModules.map((m) => (
+            <a href={`/leistungen/${m.slug}`} class="card bg-white">
+              <span class="font-mono text-xs text-slate/30">{m.number}</span>
+              <h3 class="mt-3 font-display text-base font-semibold text-slate">{m.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-slate-soft">{m.summary}</p>
+              <span class="mt-4 inline-block font-display text-base font-bold text-slate">{m.price}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</Layout>
