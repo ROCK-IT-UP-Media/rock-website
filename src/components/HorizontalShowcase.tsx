@@ -7,7 +7,6 @@ export interface ShowcaseItem {
   title: string;
   tagline: string;
   summary: string;
-  price: string;
   image: string;
   href: string;
 }
@@ -58,7 +57,7 @@ export default function HorizontalShowcase({
                 <p className="mt-1 text-xs font-medium uppercase tracking-wide text-miami">{item.tagline}</p>
                 <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-white/70">{item.summary}</p>
                 <div className="mt-5 flex items-center justify-between border-t border-white/15 pt-4">
-                  <span className="font-display text-base font-bold text-white">{item.price}</span>
+                  <span className="font-display text-sm font-medium text-miami">Modul entdecken</span>
                   <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white transition-colors group-hover:bg-miami group-hover:text-slate">
                     <ArrowUpRight size={16} />
                   </span>

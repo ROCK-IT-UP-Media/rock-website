@@ -45,7 +45,13 @@
       "Bash(python3 -)",
       "Bash(node scripts/nim-generate.mjs --prompt \"Bright high-key studio 3D render, pure white background, soft daylight. Six sleek translucent glass blocks of varying heights glow softly in light-blue and cyan \\(hex 54C3EA, 00F0FF\\) with one warm coral-orange block among them \\(hex FF5A36\\), arranged like a modular bento grid floating just above a white floor, premium Apple-keynote product aesthetic, soft shadows, no text, no logos, no people, ultra-wide cinematic composition\" --out public/assets/pages/leistungen-banner.jpg --width 1344 --height 768 --steps 28)",
       "Bash(node scripts/nim-generate.mjs --prompt \"Elegant dark navy background \\(hex 0F172A\\). A vast three-dimensional network of small glowing light-blue and cyan nodes \\(hex 54C3EA, 00F0FF\\) connected by fine light trails spreads across the frame like a starfield constellation, with a few warm coral-orange glowing nodes \\(hex FF5A36\\) scattered among them, soft depth of field, premium tech aesthetic, no text, no logos, no people, ultra-wide cinematic composition\" --out public/assets/pages/agents-network.jpg --width 1344 --height 768 --steps 28)",
-      "Bash(sort -k2)"
+      "Bash(sort -k2)",
+      "Bash(git commit -m ' *)",
+      "Bash(rtk find *)",
+      "Bash(textutil -convert txt -stdout \"/Users/christoph/Library/CloudStorage/GoogleDrive-hello.bybene@gmail.com/Meine Ablage/CLAUDE PROJECTs/Projekte/ROCK - Website/Infos/Businesskonzept ROCK IT UP Media V2.docx\")",
+      "Bash(chmod +x \"/Users/christoph/Library/CloudStorage/GoogleDrive-hello.bybene@gmail.com/Meine Ablage/CLAUDE PROJECTs/Projekte/ROCK - Website/scripts/generate-photos.sh\")",
+      "Bash(./scripts/generate-photos.sh)",
+      "Bash(echo \"env-check-exit:$?\")"
     ]
   }
 }

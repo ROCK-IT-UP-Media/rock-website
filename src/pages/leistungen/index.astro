@@ -10,7 +10,6 @@ const showcaseItems = modules.map((m) => ({
   title: m.title,
   tagline: m.tagline,
   summary: m.summary,
-  price: m.price,
   image: `/assets/modules/${m.slug}.jpg`,
   href: `/leistungen/${m.slug}`,
 }));
@@ -20,14 +19,15 @@ const showcaseItems = modules.map((m) => ({
   title="Leistungen & Module"
   description="Sechs Module für Ihre autarke KI-Marketinginfrastruktur — einzeln buchbar oder als vollständiges NYC AI-Department Blueprint. Plus standalone Retainer-Services."
 >
-  <section class="relative overflow-hidden bg-white pb-16 pt-20">
-    <div class="glow-orb -left-32 top-0 h-96 w-96 bg-miami/20"></div>
-    <div class="container-rock relative mx-auto max-w-3xl text-center">
-      <span class="section-eyebrow">Leistungen</span>
-      <h1 class="mt-6 font-display text-4xl font-bold leading-tight text-slate md:text-5xl">
+  <section class="relative overflow-hidden bg-slate pb-0 pt-20 text-white">
+    <img src="/assets/pages/leistungen-banner.jpg" alt="" class="absolute inset-0 h-full w-full object-cover opacity-60" />
+    <div class="absolute inset-0 bg-gradient-to-t from-slate via-slate/70 to-slate/40"></div>
+    <div class="container-rock relative mx-auto max-w-3xl pb-20 text-center">
+      <span class="badge border-miami/30 bg-miami/15 text-miami">Leistungen</span>
+      <h1 class="mt-6 font-display text-4xl font-bold leading-tight text-white md:text-5xl">
         Der Baukasten für Ihre Inhouse-KI-Abteilung
       </h1>
-      <p class="mt-6 text-lg leading-relaxed text-slate-soft">
+      <p class="mt-6 text-lg leading-relaxed text-white/80">
         Sechs Module, die aufeinander aufbauen — von der Brand DNA bis zur laufenden Evolution
         Ihres Systems. Buchen Sie einzeln, im Bundle oder als vollständiges Full-Setup.
       </p>
@@ -41,7 +41,113 @@ const showcaseItems = modules.map((m) => ({
     client:visible
   />
 
+  <section class="border-t border-slate/8 py-24">
+    <div class="container-rock">
+      <div class="mx-auto max-w-2xl text-center">
+        <span class="section-eyebrow">So läuft es ab</span>
+        <h2 class="mt-5 font-display text-3xl font-bold leading-tight text-slate md:text-4xl">
+          Vom ersten Gespräch zur autarken Abteilung
+        </h2>
+        <p class="mt-5 text-lg leading-relaxed text-slate-soft">
+          Kein zäher Standard-Audit. Ein klar strukturierter Weg — Sie steigen dort ein, wo der
+          größte Schmerz liegt.
+        </p>
+      </div>
+
+      <div class="mx-auto mt-14 grid max-w-5xl gap-6 md:grid-cols-4">
+        {
+          [
+            {
+              step: "01",
+              title: "Trust & Awareness",
+              text: "Authentische Einblicke, echte Fallstudien und Live-Demos der 162 AI-Agents — keine marktschreierischen Versprechen.",
+            },
+            {
+              step: "02",
+              title: "NYC AI-Department Blueprint",
+              text: "45 Minuten strategisches Audit auf C-Level-Ebene mit Live-Vorführung der Workspace-Integration und individueller ROI-Berechnung.",
+            },
+            {
+              step: "03",
+              title: "Modulare Umsetzung",
+              text: "Aufbau von Brand DNA, Web-Infrastruktur und Workspaces innerhalb weniger Wochen, inklusive Einweisung Ihres Teams.",
+            },
+            {
+              step: "04",
+              title: "Evolution Membership",
+              text: "Monatliches Refactoring Ihrer AI-Agents, Updates auf die neuesten LLM-Modelle und strategisches Sparring mit dem Senior-Strategen.",
+            },
+          ].map((s, i) => (
+            <div class="spotlight-card rounded-3xl border border-slate/8 bg-white p-7" data-reveal style={`--reveal-i:${i}`}>
+              <span class="font-mono text-xs text-miami-dark">{s.step}</span>
+              <h3 class="mt-3 font-display text-base font-semibold text-slate">{s.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-slate-soft">{s.text}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="mx-auto mt-10 max-w-3xl rounded-3xl border border-miami/15 bg-miami/5 p-7 text-center">
+        <p class="text-sm leading-relaxed text-slate">
+          <strong class="font-semibold text-slate">Sequential Entry:</strong> Sie müssen nicht das
+          Gesamtsystem kaufen. Sie starten dort, wo der größte Hebel liegt — z.&nbsp;B. veraltete
+          Website oder fehlende B2B-Sichtbarkeit — und bauen das System schrittweise aus.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <ModulesOverview />
+
+  <section class="border-t border-slate/8 py-24">
+    <div class="container-rock">
+      <div class="mx-auto max-w-2xl text-center">
+        <span class="section-eyebrow">Für wen wir arbeiten</span>
+        <h2 class="mt-5 font-display text-3xl font-bold leading-tight text-slate md:text-4xl">
+          Drei Profile, ein gemeinsamer Schmerzpunkt
+        </h2>
+        <p class="mt-5 text-lg leading-relaxed text-slate-soft">
+          Ob Mittelstand, Scale-up oder überlastetes Marketing-Team — die Ursache ist fast immer
+          dieselbe: zu teuer, zu langsam, zu generisch.
+        </p>
+      </div>
+
+      <div class="mx-auto mt-14 grid max-w-5xl gap-6 md:grid-cols-3">
+        {
+          [
+            {
+              name: "Thomas, 52",
+              role: "Geschäftsführer, Spezial-Maschinenbau",
+              pain: "Zahlt fünfstellig an eine Agentur, bekommt veraltete Broschüren statt qualifizierter Leads.",
+              path: "Startet mit Brand DNA Engine & Web Architecture oder bucht direkt das Full Setup.",
+            },
+            {
+              name: "Dr. Elena, 37",
+              role: "Co-Founderin, B2B DeepTech",
+              pain: "Das Produkt ist exzellent, doch eine 5-köpfige Inhouse-Abteilung würde 350.000 € p.a. kosten.",
+              path: "Bucht Organic Social & AI Corporate Influencer plus die Evolution Membership.",
+            },
+            {
+              name: "Markus, 45",
+              role: "Head of Marketing, IT-Services",
+              pain: "Sein Team versinkt im Tagesgeschäft, für strategischen Funnel-Aufbau bleibt keine Zeit.",
+              path: "Kombiniert Brand DNA Engine mit der High-Conversion Funnel Engine.",
+            },
+          ].map((p, i) => (
+            <div class="spotlight-card rounded-3xl border border-slate/8 bg-white p-7" data-reveal style={`--reveal-i:${i}`}>
+              <div class="flex h-11 w-11 items-center justify-center rounded-full bg-miami/12 font-display text-sm font-bold text-miami-dark">
+                {p.name.charAt(0)}
+              </div>
+              <h3 class="mt-4 font-display text-base font-semibold text-slate">{p.name}</h3>
+              <p class="text-xs text-slate-soft">{p.role}</p>
+              <p class="mt-4 text-sm leading-relaxed text-slate-soft">{p.pain}</p>
+              <p class="mt-3 text-sm font-medium leading-relaxed text-miami-dark">{p.path}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
 
   <section class="border-t border-slate/8 bg-cloud py-24">
     <div class="container-rock">
@@ -65,13 +171,8 @@ const showcaseItems = modules.map((m) => ({
               <div class="flex-1">
                 <h3 class="font-display text-base font-semibold text-slate">{r.title}</h3>
                 <p class="mt-2 text-sm leading-relaxed text-slate-soft">{r.summary}</p>
-                <div class="mt-4 flex items-center justify-between">
-                  <span class="font-display text-base font-bold text-slate">
-                    {r.price} <span class="text-xs font-normal text-slate-soft">/ {r.priceSuffix.replace("pro ", "")}</span>
-                  </span>
-                  <span class="flex items-center gap-1 font-display text-sm font-medium text-miami-dark opacity-0 transition-opacity group-hover:opacity-100">
-                    Details <Icon name="arrow-right" size={14} />
-                  </span>
+                <div class="mt-4 flex items-center gap-1 font-display text-sm font-semibold text-miami-dark">
+                  Details ansehen <Icon name="arrow-right" size={14} class="transition-transform group-hover:translate-x-1" />
                 </div>
               </div>
             </a>

@@ -1,9 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Icon from "../../components/ui/Icon.astro";
-import { modules, retainers, type Module } from "../../data/modules";
-
-type RetainerItem = (typeof retainers)[number];
+import { modules, retainers, type Module, type Retainer } from "../../data/modules";
 
 export function getStaticPaths() {
   const modulePaths = modules.map((m) => ({ params: { slug: m.slug }, props: { kind: "module" as const, item: m } }));
@@ -13,68 +11,135 @@ export function getStaticPaths() {
 
 const { kind, item } = Astro.props as
   | { kind: "module"; item: Module }
-  | { kind: "retainer"; item: RetainerItem };
+  | { kind: "retainer"; item: Retainer };
 
 const otherModules = kind === "module" ? modules.filter((m) => m.slug !== item.slug).slice(0, 3) : [];
-const pageDescription = kind === "retainer" ? item.summary : item.description;
 const bannerImage = kind === "module" ? `/assets/modules/${item.slug}.jpg` : "/assets/pages/leistungen-banner.jpg";
+const roleRows =
+  kind === "module" || kind === "retainer"
+    ? [
+        { label: "Sie", value: item.roles.customer, icon: "users" as const },
+        { label: "Senior-Stratege", value: item.roles.strategist, icon: "compass" as const },
+        { label: "AI-Agents", value: item.roles.agents, icon: "brain" as const },
+        ...(item.roles.freelancer ? [{ label: "Globales Netzwerk", value: item.roles.freelancer, icon: "globe" as const }] : []),
+      ]
+    : [];
 ---
 
-<Layout title={item.title} description={pageDescription}>
-  <div class="relative h-[42vh] min-h-[280px] w-full overflow-hidden md:h-[52vh]">
+<Layout title={item.title} description={item.summary}>
+  <div class="relative h-[46vh] min-h-[320px] w-full overflow-hidden md:h-[58vh]">
     <img src={bannerImage} alt="" class="h-full w-full object-cover" data-parallax data-parallax-strength="0.15" />
-    <div class="absolute inset-0 bg-gradient-to-t from-white via-white/10 to-white/0"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-slate via-slate/40 to-slate/10"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-miami/25 via-transparent to-transparent mix-blend-multiply"></div>
+    <div class="container-rock absolute inset-x-0 bottom-0 pb-10">
+      {kind === "module" && (
+        <span class="badge border-miami/40 bg-miami/15 text-miami">Modul {(item as Module).number} &middot; {(item as Module).tagline}</span>
+      )}
+      {kind === "retainer" && <span class="badge border-miami/40 bg-miami/15 text-miami">Standalone Retainer</span>}
+      <h1 class="mt-5 max-w-3xl font-display text-3xl font-bold leading-tight text-white drop-shadow-lg md:text-5xl">{item.title}</h1>
+      <p class="mt-4 max-w-2xl text-lg leading-relaxed text-white/85">{item.summary}</p>
+    </div>
   </div>
 
-  <section class="relative -mt-24 overflow-hidden bg-white pb-16 pt-16">
-    <div class="glow-orb -left-32 top-0 h-96 w-96 bg-miami/15"></div>
-    <div class="container-rock relative">
-      <a href="/leistungen" class="mb-8 inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wide text-slate-soft hover:text-miami-dark">
-        <Icon name="arrow-right" size={12} class="rotate-180" />
-        Alle Leistungen
-      </a>
+  <a href="/leistungen" class="container-rock mt-6 flex items-center gap-1.5 font-mono text-xs uppercase tracking-wide text-slate-soft hover:text-miami-dark">
+    <Icon name="arrow-right" size={12} class="rotate-180" />
+    Alle Leistungen
+  </a>
 
-      <div class="grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:items-start">
-        <div>
-          {kind === "module" && (
-            <span class="section-eyebrow">Modul {item.number} &middot; {item.tagline}</span>
-          )}
-          {kind === "retainer" && <span class="section-eyebrow">Standalone Retainer</span>}
-
-          <h1 class="mt-6 font-display text-3xl font-bold leading-tight text-slate md:text-4xl">{item.title}</h1>
-          <p class="mt-6 text-lg leading-relaxed text-slate-soft">{item.description}</p>
-
-          {kind === "module" && "products" in item && (
-            <div class="mt-10">
-              <h2 class="font-display text-sm font-semibold uppercase tracking-wide text-slate/50">Enthaltene Produkte</h2>
-              <ul class="mt-4 divide-y divide-slate/8 rounded-2xl border border-slate/8">
-                {item.products.map((p: { name: string; price: string }) => (
-                  <li class="flex items-center justify-between px-5 py-4">
-                    <span class="text-sm text-slate">{p.name}</span>
-                    <span class="font-mono text-sm text-slate-soft">{p.price}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-
-        <div class="sticky top-28 rounded-3xl border border-slate/8 bg-cloud p-8">
-          <p class="font-mono text-xs uppercase tracking-wide text-slate-soft">Investment</p>
-          <p class="mt-2 font-display text-4xl font-bold text-slate">{item.price}</p>
-          <p class="mt-1 text-sm text-slate-soft">{item.priceSuffix}</p>
-          {"savings" in item && item.savings && (
-            <p class="mt-4 rounded-xl bg-miami/10 px-4 py-3 text-sm text-miami-dark">{item.savings}</p>
-          )}
-          <a href="/kontakt" class="btn-primary mt-7 w-full">
-            Blueprint-Termin sichern
-            <Icon name="arrow-right" size={16} />
-          </a>
-          <p class="mt-4 text-center text-xs text-slate-soft/70">Unverbindliches Erstgespräch, keine versteckten Kosten.</p>
-        </div>
+  <section class="py-16">
+    <div class="container-rock">
+      <div class="mx-auto max-w-3xl">
+        <span class="section-eyebrow">Was das ist</span>
+        <p class="mt-5 text-lg leading-relaxed text-slate-soft">{item.whatItIs}</p>
       </div>
     </div>
   </section>
+
+  <section class="border-t border-slate/8 bg-cloud py-20">
+    <div class="container-rock">
+      <div class="mx-auto max-w-2xl text-center">
+        <span class="section-eyebrow">Was enthalten ist</span>
+        <h2 class="mt-5 font-display text-2xl font-bold text-slate md:text-3xl">Der volle Leistungsumfang</h2>
+      </div>
+      <div class="mx-auto mt-12 grid max-w-4xl gap-6">
+        {
+          item.features.map((f, i) => (
+            <div class="spotlight-card flex gap-5 rounded-3xl border border-slate/8 bg-white p-7" data-reveal style={`--reveal-i:${i}`}>
+              <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-miami/12 font-mono text-sm font-bold text-miami-dark">
+                {i + 1}
+              </div>
+              <div>
+                <h3 class="font-display text-base font-semibold text-slate">{f.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-slate-soft">{f.detail}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20">
+    <div class="container-rock">
+      <div class="mx-auto max-w-2xl text-center">
+        <span class="section-eyebrow">Ihre Vorteile</span>
+        <h2 class="mt-5 font-display text-2xl font-bold text-slate md:text-3xl">Was sich für Sie ändert</h2>
+      </div>
+      <div class="mx-auto mt-12 grid max-w-4xl gap-5 sm:grid-cols-3">
+        {
+          item.benefits.map((b, i) => (
+            <div class="spotlight-card rounded-3xl border border-miami/15 bg-miami/5 p-6" data-reveal style={`--reveal-i:${i}`}>
+              <Icon name="check" size={18} class="text-miami-dark" />
+              <p class="mt-4 text-sm leading-relaxed text-slate">{b}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-slate/8 bg-slate py-20 text-white">
+    <div class="container-rock">
+      <div class="mx-auto max-w-2xl text-center">
+        <span class="badge border-miami/30 bg-miami/15 text-miami">So arbeiten wir</span>
+        <h2 class="mt-5 font-display text-2xl font-bold md:text-3xl">Transparente Rollenverteilung</h2>
+        <p class="mt-4 text-white/60">Sie wissen zu jedem Zeitpunkt, wer welchen Teil der Arbeit übernimmt.</p>
+      </div>
+      <div class="mx-auto mt-12 grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          roleRows.map((r) => (
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+              <Icon name={r.icon} size={20} class="text-miami" />
+              <h3 class="mt-4 font-display text-sm font-semibold uppercase tracking-wide text-white/50">{r.label}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-white/75">{r.value}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {kind === "module" && (
+    <section class="py-20">
+      <div class="container-rock">
+        <div class="mx-auto max-w-3xl rounded-[2rem] border border-slate/8 bg-cloud p-8 sm:p-12">
+          <span class="section-eyebrow">Für wen ist das?</span>
+          <p class="mt-6 font-display text-xl italic leading-snug text-slate sm:text-2xl">
+            „{(item as Module).personaFit.quote}"
+          </p>
+          <div class="mt-6 flex items-center gap-3">
+            <div class="flex h-11 w-11 items-center justify-center rounded-full bg-miami/15 font-display text-sm font-bold text-miami-dark">
+              {(item as Module).personaFit.name.charAt(0)}
+            </div>
+            <div>
+              <p class="font-display text-sm font-semibold text-slate">{(item as Module).personaFit.name}</p>
+              <p class="text-xs text-slate-soft">{(item as Module).personaFit.role}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
 
   {otherModules.length > 0 && (
     <section class="border-t border-slate/8 bg-cloud py-20">
@@ -88,7 +153,7 @@ const bannerImage = kind === "module" ? `/assets/modules/${item.slug}.jpg` : "/a
               data-reveal
               style={`--reveal-i:${i}`}
             >
-              <div class="h-28 overflow-hidden">
+              <div class="h-32 overflow-hidden">
                 <img
                   src={`/assets/modules/${m.slug}.jpg`}
                   alt=""
@@ -100,7 +165,6 @@ const bannerImage = kind === "module" ? `/assets/modules/${item.slug}.jpg` : "/a
                 <span class="font-mono text-xs text-slate/30">{m.number}</span>
                 <h3 class="mt-2 font-display text-base font-semibold text-slate">{m.title}</h3>
                 <p class="mt-2 text-sm leading-relaxed text-slate-soft">{m.summary}</p>
-                <span class="mt-4 inline-block font-display text-base font-bold text-slate">{m.price}</span>
               </div>
             </a>
           ))}
@@ -108,4 +172,26 @@ const bannerImage = kind === "module" ? `/assets/modules/${item.slug}.jpg` : "/a
       </div>
     </section>
   )}
+
+  <section class="py-20">
+    <div class="container-rock">
+      <div class="relative mx-auto max-w-3xl overflow-hidden rounded-[2rem] bg-slate p-8 text-center sm:p-12">
+        <div class="glow-orb -top-20 left-10 h-64 w-64 bg-miami/30"></div>
+        <div class="glow-orb -bottom-20 right-10 h-64 w-64 bg-coral/20"></div>
+        <div class="relative">
+          <p class="font-mono text-xs uppercase tracking-wide text-white/50">Investment</p>
+          <p class="mt-3 font-display text-4xl font-bold text-white sm:text-5xl">{item.price}</p>
+          <p class="mt-1 text-sm text-white/60">{item.priceSuffix}</p>
+          {"savings" in item && item.savings && (
+            <p class="mx-auto mt-5 max-w-md rounded-xl bg-miami/15 px-5 py-3 text-sm text-miami">{item.savings}</p>
+          )}
+          <a href="/kontakt" class="btn-primary mt-8 inline-flex bg-miami text-slate hover:bg-coral hover:text-white">
+            Blueprint-Termin sichern
+            <Icon name="arrow-right" size={16} />
+          </a>
+          <p class="mt-4 text-xs text-white/40">Unverbindliches Erstgespräch, keine versteckten Kosten.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 </Layout>

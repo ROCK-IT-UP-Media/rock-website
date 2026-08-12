@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 
 const springTransition = {
@@ -14,71 +15,118 @@ const fadeUp = (delay: number) => ({
   transition: { ...springTransition, delay },
 });
 
+const slides = [
+  { src: "/assets/hero/photo-1-celebration.jpg", alt: "Team feiert einen Marketing-Erfolg" },
+  { src: "/assets/hero/photo-2-meeting.jpg", alt: "Strategiegespräch im Meetingraum" },
+  { src: "/assets/hero/photo-3-presentation.jpg", alt: "Präsentation der Wachstumszahlen" },
+  { src: "/assets/hero/photo-4-handshake.jpg", alt: "Handschlag nach erfolgreichem Abschluss" },
+  { src: "/assets/hero/photo-5-huddle.jpg", alt: "Team analysiert eine Live-Kampagne" },
+];
+
+const SLIDE_DURATION = 5000;
+
 export default function Hero() {
+  const [index, setIndex] = useState(0);
+  const [reduceMotion, setReduceMotion] = useState(false);
+
+  useEffect(() => {
+    setReduceMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = setInterval(() => setIndex((i) => (i + 1) % slides.length), SLIDE_DURATION);
+    return () => clearInterval(id);
+  }, []);
+
   return (
-    <div className="flex h-full items-center justify-center px-6">
-      <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
-        <motion.div {...fadeUp(0)} className="badge mb-8 border-miami/25 bg-white/70 text-miami-dark backdrop-blur-sm">
-          <Sparkles size={13} strokeWidth={2.5} />
-          1 Senior Strategist &middot; 162 AI-Agents
-        </motion.div>
-
-        <motion.h1
-          {...fadeUp(0.08)}
-          className="font-display text-4xl font-bold leading-[1.08] tracking-tight text-slate drop-shadow-[0_2px_20px_rgba(255,255,255,0.9)] sm:text-5xl md:text-6xl lg:text-[4.25rem]"
-        >
-          Ihre KI-Marketingabteilung.
-          <br />
-          <span className="text-miami-dark">Schlüsselfertig.</span>{" "}
-          <span className="text-coral">Autark.</span> <span>Marktdominant.</span>
-        </motion.h1>
-
-        <motion.p
-          {...fadeUp(0.18)}
-          className="mt-7 max-w-2xl text-balance text-lg leading-relaxed text-slate-soft drop-shadow-[0_2px_16px_rgba(255,255,255,0.9)] md:text-xl"
-        >
-          Schluss mit trägen Großagenturen. Wir installieren die Marketinginfrastruktur der
-          Zukunft direkt in Ihrem Unternehmen — jahrzehntelange Marketing-Expertise, gesteuert
-          auf Knopfdruck.
-        </motion.p>
-
-        <motion.div {...fadeUp(0.28)} className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
-          <a href="/kontakt" className="btn-primary group">
-            NYC AI-Department Blueprint buchen
-            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-          </a>
-          <a href="/leistungen" className="btn-secondary bg-white/80 backdrop-blur-sm">
-            Module entdecken
-          </a>
-        </motion.div>
-
-        <motion.div
-          {...fadeUp(0.38)}
-          className="mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 font-mono text-xs uppercase tracking-wider text-slate-soft/80 drop-shadow-[0_1px_10px_rgba(255,255,255,0.9)]"
-        >
-          <span>EU-vServer</span>
-          <span className="h-1 w-1 rounded-full bg-slate/20" />
-          <span>DSGVO-konform</span>
-          <span className="h-1 w-1 rounded-full bg-slate/20" />
-          <span>Human-in-the-Loop</span>
-          <span className="h-1 w-1 rounded-full bg-slate/20" />
-          <span>100&nbsp;% Digital</span>
-        </motion.div>
-
-        <motion.div
-          {...fadeUp(0.5)}
-          className="mt-16 flex flex-col items-center gap-2 text-slate-soft/60"
-        >
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em]">Scrollen</span>
+    <section className="relative flex min-h-[92vh] items-center overflow-hidden bg-slate">
+      <div className="absolute inset-0">
+        <AnimatePresence mode="sync">
           <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-            className="flex h-8 w-5 items-start justify-center rounded-full border border-slate/25 p-1"
+            key={slides[index].src}
+            className="absolute inset-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.2, ease: "easeInOut" }}
           >
-            <span className="h-1.5 w-1 rounded-full bg-slate/40" />
+            <motion.img
+              src={slides[index].src}
+              alt={slides[index].alt}
+              className="h-full w-full object-cover"
+              initial={{ scale: 1 }}
+              animate={{ scale: reduceMotion ? 1 : 1.09 }}
+              transition={{ duration: SLIDE_DURATION / 1000 + 1.2, ease: "linear" }}
+            />
           </motion.div>
-        </motion.div>
+        </AnimatePresence>
+        <div className="absolute inset-0 bg-gradient-to-t from-slate via-slate/55 to-slate/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate/70 via-transparent to-transparent" />
       </div>
-    </div>
+
+      <div className="container-rock relative z-10">
+        <div className="flex max-w-3xl flex-col">
+          <motion.div
+            {...fadeUp(0)}
+            className="mb-8 inline-flex w-fit items-center gap-1.5 rounded-full bg-miami px-4 py-2 font-mono text-xs font-bold uppercase tracking-wider text-slate shadow-glow-miami"
+          >
+            <Sparkles size={13} strokeWidth={2.5} />
+            1 Senior Strategist &middot; 162 AI-Agents
+          </motion.div>
+
+          <motion.h1
+            {...fadeUp(0.08)}
+            className="font-display text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[4.25rem]"
+          >
+            Ihre KI-Marketingabteilung.
+            <br />
+            <span className="text-miami">Schlüsselfertig.</span>{" "}
+            <span className="text-coral">Autark.</span> <span>Marktdominant.</span>
+          </motion.h1>
+
+          <motion.p {...fadeUp(0.18)} className="mt-7 max-w-xl text-balance text-lg leading-relaxed text-white/85 md:text-xl">
+            Schluss mit trägen Großagenturen. Wir installieren die Marketinginfrastruktur der
+            Zukunft direkt in Ihrem Unternehmen — jahrzehntelange Marketing-Expertise, gesteuert
+            auf Knopfdruck.
+          </motion.p>
+
+          <motion.div {...fadeUp(0.28)} className="mt-10 flex flex-col items-start gap-4 sm:flex-row">
+            <a href="/kontakt" className="btn-primary group bg-miami text-slate hover:bg-coral hover:text-white">
+              NYC AI-Department Blueprint buchen
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+            </a>
+            <a href="/leistungen" className="btn-secondary border-white/25 bg-white/5 text-white backdrop-blur-sm hover:border-miami hover:bg-white/10">
+              Module entdecken
+            </a>
+          </motion.div>
+
+          <motion.div
+            {...fadeUp(0.38)}
+            className="mt-14 flex flex-wrap items-center gap-x-8 gap-y-3 font-mono text-xs uppercase tracking-wider text-white/60"
+          >
+            <span>EU-vServer</span>
+            <span className="h-1 w-1 rounded-full bg-white/25" />
+            <span>DSGVO-konform</span>
+            <span className="h-1 w-1 rounded-full bg-white/25" />
+            <span>Human-in-the-Loop</span>
+            <span className="h-1 w-1 rounded-full bg-white/25" />
+            <span>100&nbsp;% Digital</span>
+          </motion.div>
+        </div>
+      </div>
+
+      <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 gap-2">
+        {slides.map((s, i) => (
+          <button
+            key={s.src}
+            aria-label={`Bild ${i + 1} von ${slides.length}`}
+            onClick={() => setIndex(i)}
+            className="h-1.5 rounded-full transition-all duration-500"
+            style={{
+              width: i === index ? "28px" : "8px",
+              backgroundColor: i === index ? "#54c3ea" : "rgba(255,255,255,0.35)",
+            }}
+          />
+        ))}
+      </div>
+    </section>
   );
 }

@@ -1,58 +1,99 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Icon from "../components/ui/Icon.astro";
-import { leadershipAgents, totalAgentCount, microSpecialistCount } from "../data/agents";
+import { leadershipAgents, totalAgentCount, microSpecialistCount, ceo } from "../data/agents";
 
-const colorMap: Record<string, string> = {
-  miami: "bg-miami/12 text-miami-dark border-miami/20",
-  coral: "bg-coral/10 text-coral-dark border-coral/20",
-  cyan: "bg-cyan/10 text-slate border-cyan/25",
-  slate: "bg-slate/6 text-slate border-slate/15",
-};
+const pillars = [
+  {
+    icon: "compass" as const,
+    title: "1 Krisenerprobter Senior-Stratege",
+    text: "Führt die Regie, übernimmt strategische Ausrichtung, empathische Verhandlung, Markenführung, Krisenintervention und die finale Qualitätsfreigabe jeder Kampagne.",
+  },
+  {
+    icon: "brain" as const,
+    title: "162 Spezialisierte AI-Agents",
+    text: "Das interne High-End-Powerhouse für blitzschnelle, automatisierte und hochpräzise operative Ausführung — jeder Agent mit eigener Persona und Spezialdisziplin.",
+  },
+  {
+    icon: "globe" as const,
+    title: "Globales Experten-Backup",
+    text: "Punktgenauer Zugriff auf ein handverlesenes, weltweites Netzwerk aus Tech-Spezialisten, Prompt-Engineers und KI-Entwicklern für seltene, hochkomplexe Anforderungen.",
+  },
+  {
+    icon: "shield-check" as const,
+    title: "100 % Digital & Papierlos",
+    text: "Höchste Datensicherheit, DSGVO-Konformität und nahtlose Integration direkt in Ihre eigenen Workspaces (Claude Projects / Hermes).",
+  },
+];
+
+const objections = [
+  {
+    q: "„Wie steht es um Datenschutz & DSGVO?“",
+    a: "Unsere Systeme werden strikt im EU-Datenraum integriert. Die Architekturen nutzen vServer-Strukturen und geschlossene Workspaces. Ihre Daten werden niemals für das Training öffentlicher Modelle genutzt.",
+  },
+  {
+    q: "„KI erzeugt doch nur austauschbaren Einheitsbrei.“",
+    a: "Ganz genau — wenn man nur stumpfe Prompts nutzt. Wir codieren Ihre individuelle Brand DNA, Ihr Fachwissen und Ihre Wording-Matrix direkt in 162 spezialisierte Agents. Zudem garantiert unser Senior-Stratege die finale Qualitätsfreigabe.",
+  },
+  {
+    q: "„Das ist eine substanzielle Investition.“",
+    a: "Verglichen mit einer klassischen Agentur (ca. 80.000–120.000 € Jahres-Retainer) oder zwei Vollzeitstellen (160.000 € p.a.) amortisiert sich das System im ersten Jahr. Nach der Übergabe gehört die Infrastruktur dauerhaft Ihrem Unternehmen.",
+  },
+];
 ---
 
 <Layout
   title="Über Uns"
-  description="Der Gründer von ROCK IT UP Media, seine jahrzehntelange Marketing-Expertise und das intern gespiegelte New Yorker Agentur-Team aus 162 AI-Agents."
+  description="Christoph Benedikt, Gründer von ROCK IT UP Media: jahrzehntelange Marketing- und Krisenkommunikations-Expertise, gebündelt in einer autarken KI-Marketinginfrastruktur mit 162 spezialisierten AI-Agents."
 >
-  <section class="relative overflow-hidden bg-white pb-16 pt-20">
-    <div class="glow-orb -right-32 top-0 h-96 w-96 bg-miami/20"></div>
-    <div class="container-rock relative mx-auto max-w-3xl text-center">
-      <span class="section-eyebrow">Über Uns</span>
-      <h1 class="mt-6 font-display text-4xl font-bold leading-tight text-slate md:text-5xl">
+  <section class="relative overflow-hidden bg-slate pb-0 pt-20 text-white">
+    <img src="/assets/pages/about-founder.jpg" alt="" class="absolute inset-0 h-full w-full object-cover opacity-55" />
+    <div class="absolute inset-0 bg-gradient-to-t from-slate via-slate/75 to-slate/40"></div>
+    <div class="container-rock relative mx-auto max-w-3xl pb-24 text-center">
+      <span class="badge border-miami/30 bg-miami/15 text-miami">Über Uns</span>
+      <h1 class="mt-6 font-display text-4xl font-bold leading-tight text-white md:text-5xl">
         Vom digitalen Nomaden zum KI-Systemintegrator
       </h1>
+      <p class="mt-6 text-lg leading-relaxed text-white/80">
+        Damit Sie genau wissen, mit wem Sie sich einlassen: die Geschichte, die Expertise und das
+        Team hinter ROCK IT UP Media.
+      </p>
     </div>
   </section>
 
-  <div class="container-rock">
-    <div class="relative h-[36vh] min-h-[240px] w-full overflow-hidden rounded-[2rem] md:h-[46vh]">
-      <img
-        src="/assets/pages/about-founder.jpg"
-        alt="Abstraktes Globus-Motiv aus leuchtenden Lichtlinien"
-        class="h-full w-full object-cover"
-        data-parallax
-        data-parallax-strength="0.12"
-      />
-    </div>
-  </div>
-
-  <section class="pb-24 pt-16">
+  <section class="py-24">
     <div class="container-rock">
       <div class="mx-auto grid max-w-4xl gap-16">
         <div>
           <span class="badge">Founder-DNA</span>
           <h2 class="mt-4 font-display text-2xl font-bold text-slate md:text-3xl">Die Global-Nomad-Origin-Story</h2>
           <p class="mt-5 text-lg leading-relaxed text-slate-soft">
-            ROCK IT UP Media ist zu 100&nbsp;% ortsunabhängig, digital und vollkommen papierlos
-            aufgestellt. Der Gründer verbrachte Jahre als digitaler Nomade in den weltweit
-            führenden Marketing- und KI-Tech-Bubbles — von Mexiko-City bis Bali. Aus dieser
-            globalen Reise entstand eine klare Erkenntnis: Jedes Business leidet unter
-            überteuertem, wirkungslosem Agentur-Marketing.
+            ROCK IT UP Media ist kein verstaubter Bürokomplex mit Aktenordnern und Stempeluhren.
+            Wir sind zu 100&nbsp;% ortsunabhängig, digital und vollkommen papierlos aufgestellt —
+            kein einziger Zettel existiert im gesamten Unternehmen. Diese Architektur ist das
+            Resultat einer jahrelangen Reise: Christoph Benedikt war jahrelang als digitaler
+            Nomade auf der gesamten Weltkarte unterwegs. Dabei ging es nie um gemütlichen
+            Strandurlaub, sondern um das gezielte Eintauchen in die weltweit führenden Marketing-
+            und KI-Tech-Bubbles.
           </p>
           <p class="mt-4 text-lg leading-relaxed text-slate-soft">
-            Die Vision daraus: Unternehmen von Agenturen zu befreien und ihnen eine eigene
-            Inhouse-KI-Marketingabteilung einzubauen — ein System, das sie besitzen, nicht mieten.
+            Was passiert, wenn man jahrelang radikal über den Tellerrand schaut? Als
+            ortsunabhängiger Unternehmer ohne Sicherheitsnetz ist man zu 100&nbsp;% für sich selbst
+            verantwortlich — niemand korrigiert kurz Fehler oder schaut drüber. Diese absolute
+            Eigenverantwortung schärft den Blick für das, was im Business wirklich zählt. In
+            zahllosen Gesprächen weltweit — von der passionierten Taco-Verkäuferin an einer
+            brodelnden Straßenküche in Mexiko-City bis hin zum Selfmade-Millionär in einer Villa
+            auf Bali — wurde eine universelle Erkenntnis glasklar: Jedes Business, egal wie groß
+            oder klein, kämpft mit denselben Grundproblemen. Und fast immer lautet die größte
+            Sorge: Marketing kostet unverschämt viel Geld und bringt am Ende nicht die
+            gewünschten Ergebnisse.
+          </p>
+          <p class="mt-4 text-lg leading-relaxed text-slate-soft">
+            Aus diesem global geschärften Blickwinkel entstand die Vision: Unternehmen von
+            überteuerten Agenturen zu befreien und ihnen stattdessen echte, autarke
+            Marketing-Power direkt ins eigene Haus zu bauen. Mit dem Durchbruch der
+            KI-Technologie fügten sich alle Puzzleteile zusammen — die Geburtsstunde von ROCK IT
+            UP Media.
           </p>
         </div>
 
@@ -60,55 +101,44 @@ const colorMap: Record<string, string> = {
           <span class="badge border-miami/20 bg-miami/8 text-miami-dark">Human-in-the-Loop</span>
           <h2 class="mt-4 font-display text-2xl font-bold text-slate md:text-3xl">Führung &amp; Senior-Expertise</h2>
           <p class="mt-5 text-lg leading-relaxed text-slate-soft">
-            An der Spitze steht der CEO als Senior Strategist. Seine jahrzehntelange Erfahrung im
-            klassischen Marketing, Corporate Design und der Führung strategischer Kommunikation
-            unter Extrembedingungen — darunter jahrelange Verantwortung in der
-            Krisenkommunikation im Hilfswesen — bildet das Fundament des gesamten Systems.
+            An der Spitze steht Christoph Benedikt als Senior Strategist. Seine jahrzehntelange
+            Erfahrung im klassischen Marketing, Corporate Design und der Führung strategischer
+            Kommunikation unter Extrembedingungen — darunter jahrelange Verantwortung in der
+            Krisenkommunikation für eine der bekanntesten Rettungsorganisationen Österreichs —
+            bildet das Fundament des gesamten Systems.
           </p>
           <p class="mt-4 text-lg leading-relaxed text-slate-soft">
-            Er prüft jede Strategie, jede Kampagne und jede Kernaussage, bevor sie Ihr Unternehmen
-            repräsentiert.
+            Wir wissen, dass viele Menschen bei reiner KI noch immer Unbehagen empfinden. Deshalb
+            gilt bei ROCK IT UP Media unverrückbar: Künstliche Intelligenz ist der Beschleuniger,
+            aber der Mensch behält das Steuer. Jede wichtige Entscheidung wird von einem
+            krisenerprobten Strategen getroffen und geprüft, bevor sie Ihr Unternehmen
+            repräsentiert. Zusätzlich greifen wir durch die jahrelange Präsenz in der globalen
+            Digital-Nomaden- und Tech-Szene auf ein handverlesenes, weltweites Netzwerk aus
+            Elite-Freelancern und KI-Entwicklern zurück — für absolute Ausfallsicherheit, wenn ein
+            AI-Agent bei extrem komplexen Sonderwünschen an seine Grenzen stößt.
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="relative overflow-hidden border-t border-slate/8 bg-slate py-24 text-white">
-    <img
-      src="/assets/pages/agents-network.jpg"
-      alt=""
-      class="absolute inset-0 h-full w-full object-cover opacity-50"
-      data-parallax
-      data-parallax-strength="0.08"
-    />
-    <div class="absolute inset-0 bg-slate/40"></div>
-    <div class="glow-orb -top-32 left-1/4 h-96 w-96 bg-miami/15"></div>
-    <div class="glow-orb bottom-0 right-0 h-80 w-80 bg-coral/10"></div>
-
-    <div class="container-rock relative">
+  <section class="border-t border-slate/8 bg-cloud py-24">
+    <div class="container-rock">
       <div class="mx-auto max-w-2xl text-center">
-        <span class="badge border-white/15 bg-white/5 text-white/70">Das New Yorker Agentur-Team</span>
-        <h2 class="mt-5 font-display text-3xl font-bold leading-tight md:text-4xl">
-          {totalAgentCount} AI-Agents, intern gespiegelt
+        <span class="section-eyebrow">Die 4-Säulen-Architektur</span>
+        <h2 class="mt-5 font-display text-3xl font-bold leading-tight text-slate md:text-4xl">
+          So ist ROCK IT UP Media aufgebaut
         </h2>
-        <p class="mt-5 text-lg leading-relaxed text-white/60">
-          Sieben Führungs-Agents orchestrieren {microSpecialistCount} weitere Micro-Spezialisten —
-          jeder mit eigener Rolle, eigenem Charakter und klarer Funktion.
-        </p>
       </div>
-
-      <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {
-          leadershipAgents.map((agent, i) => (
-            <div class="spotlight-card rounded-3xl border border-white/10 bg-white/[0.03] p-7" data-reveal style={`--reveal-i:${i}`}>
-              <div class:list={["mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full border font-display text-base font-bold", colorMap[agent.color]]}>
-                {agent.name.charAt(0)}
+          pillars.map((p, i) => (
+            <div class="spotlight-card card bg-white" data-reveal style={`--reveal-i:${i}`}>
+              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-miami/10 text-miami-dark">
+                <Icon name={p.icon} size={22} />
               </div>
-              <h3 class="font-display text-lg font-semibold text-white">{agent.name}</h3>
-              <p class="mt-0.5 font-mono text-[11px] uppercase tracking-wide text-white/40">{agent.role}</p>
-              <p class="mt-3 text-sm font-medium text-miami">{agent.trait}</p>
-              <p class="mt-2 text-sm leading-relaxed text-white/55">{agent.bio}</p>
+              <h3 class="mt-5 font-display text-lg font-semibold text-slate">{p.title}</h3>
+              <p class="mt-2.5 text-sm leading-relaxed text-slate-soft">{p.text}</p>
             </div>
           ))
         }
@@ -118,7 +148,97 @@ const colorMap: Record<string, string> = {
 
   <section class="py-24">
     <div class="container-rock">
-      <div class="mx-auto max-w-3xl rounded-3xl border border-slate/8 bg-cloud p-10 text-center">
+      <div class="mx-auto max-w-4xl">
+        <span class="section-eyebrow">Der Gründer</span>
+        <div class="mt-8 flex flex-col gap-8 rounded-[2rem] border border-slate/8 bg-white p-8 shadow-card sm:flex-row sm:items-start sm:p-12">
+          <div class="flex h-28 w-28 shrink-0 items-center justify-center rounded-full border-2 border-miami bg-cloud font-display text-3xl font-bold text-miami-dark">
+            CB
+          </div>
+          <div>
+            <h2 class="font-display text-2xl font-bold text-slate">{ceo.name}</h2>
+            <p class="mt-1 font-mono text-xs uppercase tracking-wide text-miami-dark">{ceo.role}</p>
+            <p class="mt-5 text-lg leading-relaxed text-slate-soft">{ceo.bio}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="relative overflow-hidden border-t border-slate/8 bg-slate py-24 text-white">
+    <img
+      src="/assets/pages/agents-network.jpg"
+      alt=""
+      class="absolute inset-0 h-full w-full object-cover opacity-40"
+      data-parallax
+      data-parallax-strength="0.08"
+    />
+    <div class="absolute inset-0 bg-slate/50"></div>
+    <div class="glow-orb -top-32 left-1/4 h-96 w-96 bg-miami/15"></div>
+    <div class="glow-orb bottom-0 right-0 h-80 w-80 bg-coral/10"></div>
+
+    <div class="container-rock relative">
+      <div class="mx-auto max-w-2xl text-center">
+        <span class="badge border-miami/30 bg-miami/15 text-miami">Das New Yorker Agentur-Team</span>
+        <h2 class="mt-5 font-display text-3xl font-bold leading-tight md:text-4xl">
+          {totalAgentCount} AI-Agents, intern gespiegelt
+        </h2>
+        <p class="mt-5 text-lg leading-relaxed text-white/60">
+          Um die Leistungsfähigkeit moderner KI-Systeme live zu demonstrieren, spiegeln wir intern
+          die Kapazitäten einer New Yorker High-End-Großagentur wider. Jeder Agent besitzt einen
+          eigenen Namen, eine feste Persona und eine exakte Spezialdisziplin.
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          leadershipAgents.map((agent, i) => (
+            <div class="spotlight-card group overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] transition-colors hover:bg-white/[0.06]" data-reveal style={`--reveal-i:${i}`}>
+              <div class="relative h-48 overflow-hidden">
+                <img src={agent.photo} alt={agent.name} class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate via-slate/10 to-transparent" />
+              </div>
+              <div class="p-6">
+                <h3 class="font-display text-lg font-semibold text-white">{agent.name}</h3>
+                <p class="mt-0.5 font-mono text-[11px] uppercase tracking-wide text-white/40">{agent.role}</p>
+                <p class="mt-3 text-sm font-medium text-miami">{agent.trait}</p>
+                <p class="mt-2 text-sm leading-relaxed text-white/55">{agent.bio}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="mt-10 flex items-center justify-center gap-3 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-center font-mono text-xs text-white/50 sm:w-fit sm:mx-auto">
+        <Icon name="users" size={14} />
+        + {microSpecialistCount} weitere Micro-Spezialisten für SEO, Sound Design, Video Scripting, Analytics und mehr
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-slate/8 bg-cloud py-24">
+    <div class="container-rock">
+      <div class="mx-auto max-w-2xl text-center">
+        <span class="section-eyebrow">Häufige Fragen</span>
+        <h2 class="mt-5 font-display text-3xl font-bold leading-tight text-slate md:text-4xl">
+          Was Entscheider uns zuerst fragen
+        </h2>
+      </div>
+      <div class="mt-14 grid gap-6 md:grid-cols-3">
+        {
+          objections.map((o, i) => (
+            <div class="spotlight-card card bg-white" data-reveal style={`--reveal-i:${i}`}>
+              <p class="font-display text-base font-semibold text-slate">{o.q}</p>
+              <p class="mt-3 text-sm leading-relaxed text-slate-soft">{o.a}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24">
+    <div class="container-rock">
+      <div class="mx-auto max-w-3xl rounded-3xl border border-slate/8 bg-white p-10 text-center shadow-card">
         <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-miami/10 text-miami-dark">
           <Icon name="shield-check" size={26} />
         </div>
