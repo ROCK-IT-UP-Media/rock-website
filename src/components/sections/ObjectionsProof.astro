@@ -34,8 +34,8 @@ const objections = [
 
     <div class="mt-14 grid gap-6 md:grid-cols-3">
       {
-        objections.map((o) => (
-          <div class="card bg-white">
+        objections.map((o, i) => (
+          <div class="spotlight-card card bg-white" data-reveal style={`--reveal-i:${i}`}>
             <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate/6 text-slate">
               <Icon name={o.icon} size={22} />
             </div>

@@ -10,6 +10,14 @@ const colorMap: Record<string, string> = {
 ---
 
 <section class="relative overflow-hidden border-t border-slate/8 bg-slate py-24 text-white">
+  <img
+    src="/assets/pages/agents-network.jpg"
+    alt=""
+    class="absolute inset-0 h-full w-full object-cover opacity-50"
+    data-parallax
+    data-parallax-strength="0.08"
+  />
+  <div class="absolute inset-0 bg-slate/40"></div>
   <div class="glow-orb -top-32 left-1/4 h-96 w-96 bg-miami/15"></div>
   <div class="glow-orb bottom-0 right-0 h-80 w-80 bg-coral/10"></div>
 
@@ -28,8 +36,8 @@ const colorMap: Record<string, string> = {
 
     <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {
-        leadershipAgents.map((agent) => (
-          <div class="rounded-3xl border border-white/10 bg-white/[0.03] p-6 transition-colors hover:bg-white/[0.06]">
+        leadershipAgents.map((agent, i) => (
+          <div class="spotlight-card rounded-3xl border border-white/10 bg-white/[0.03] p-6 transition-colors hover:bg-white/[0.06]" data-reveal style={`--reveal-i:${i}`}>
             <div class:list={["mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full border font-display text-sm font-bold", colorMap[agent.color]]}>
               {agent.name.charAt(0)}
             </div>

@@ -38,10 +38,79 @@ const pageTitle = `${title} | ROCK IT UP Media`;
     />
   </head>
   <body>
+    <div id="scroll-progress-bar"></div>
     <Header />
     <main>
       <slot />
     </main>
     <Footer />
+
+    <script>
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // Scroll-reveal stagger fade-ins
+      const revealEls = document.querySelectorAll<HTMLElement>("[data-reveal]");
+      if (revealEls.length && !reduceMotion) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-revealed");
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+        );
+        revealEls.forEach((el) => io.observe(el));
+      } else {
+        revealEls.forEach((el) => el.classList.add("is-revealed"));
+      }
+
+      // Cursor-following spotlight glow on cards
+      document.querySelectorAll<HTMLElement>(".spotlight-card").forEach((card) => {
+        card.addEventListener("mousemove", (e: MouseEvent) => {
+          const rect = card.getBoundingClientRect();
+          card.style.setProperty("--spotlight-x", `${e.clientX - rect.left}px`);
+          card.style.setProperty("--spotlight-y", `${e.clientY - rect.top}px`);
+        });
+      });
+
+      // Scroll progress bar
+      const progressBar = document.getElementById("scroll-progress-bar");
+      function updateProgress() {
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+        if (progressBar) progressBar.style.width = `${progress}%`;
+      }
+
+      // Parallax for [data-parallax] images
+      const parallaxEls = document.querySelectorAll<HTMLElement>("[data-parallax]");
+      function updateParallax() {
+        if (reduceMotion) return;
+        const viewportH = window.innerHeight;
+        parallaxEls.forEach((el) => {
+          const rect = el.getBoundingClientRect();
+          const strength = parseFloat(el.getAttribute("data-parallax-strength") || "0.15");
+          const centerOffset = rect.top + rect.height / 2 - viewportH / 2;
+          const translate = centerOffset * strength * -1;
+          el.style.transform = `translate3d(0, ${translate}px, 0) scale(1.15)`;
+        });
+      }
+
+      let ticking = false;
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          updateProgress();
+          updateParallax();
+          ticking = false;
+        });
+      }
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    </script>
   </body>
 </html>

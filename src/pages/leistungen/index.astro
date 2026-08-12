@@ -2,7 +2,18 @@
 import Layout from "../../layouts/Layout.astro";
 import Icon from "../../components/ui/Icon.astro";
 import ModulesOverview from "../../components/sections/ModulesOverview.astro";
-import { retainers } from "../../data/modules";
+import HorizontalShowcase from "../../components/HorizontalShowcase.tsx";
+import { modules, retainers } from "../../data/modules";
+
+const showcaseItems = modules.map((m) => ({
+  number: m.number,
+  title: m.title,
+  tagline: m.tagline,
+  summary: m.summary,
+  price: m.price,
+  image: `/assets/modules/${m.slug}.jpg`,
+  href: `/leistungen/${m.slug}`,
+}));
 ---
 
 <Layout
@@ -23,6 +34,13 @@ import { retainers } from "../../data/modules";
     </div>
   </section>
 
+  <HorizontalShowcase
+    items={showcaseItems}
+    eyebrow="Cinematischer Überblick"
+    title="Scrollen Sie durch den Baukasten."
+    client:visible
+  />
+
   <ModulesOverview />
 
   <section class="border-t border-slate/8 bg-cloud py-24">
@@ -39,8 +57,8 @@ import { retainers } from "../../data/modules";
 
       <div class="mt-14 grid gap-6 md:grid-cols-2">
         {
-          retainers.map((r) => (
-            <a href={`/leistungen/${r.slug}`} class="card group flex items-start gap-5 bg-white">
+          retainers.map((r, i) => (
+            <a href={`/leistungen/${r.slug}`} class="spotlight-card card group flex items-start gap-5 bg-white" data-reveal style={`--reveal-i:${i}`}>
               <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-slate/6 text-slate">
                 <Icon name={r.icon as any} size={20} />
               </div>

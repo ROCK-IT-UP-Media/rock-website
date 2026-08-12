@@ -36,8 +36,8 @@ const pillars = [
 
     <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {
-        pillars.map((p) => (
-          <div class="card">
+        pillars.map((p, i) => (
+          <div class="spotlight-card card" data-reveal style={`--reveal-i:${i}`}>
             <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-miami/10 text-miami-dark">
               <Icon name={p.icon} size={22} />
             </div>

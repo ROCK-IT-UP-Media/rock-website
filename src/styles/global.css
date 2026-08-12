@@ -84,4 +84,66 @@
   .section-eyebrow {
     @apply inline-flex items-center gap-1.5 rounded-full border border-miami/20 bg-miami/8 px-3.5 py-1.5 font-mono text-xs font-medium uppercase tracking-wider text-miami-dark;
   }
+
+  /* Scroll-reveal: elements fade/slide in once, staggered via --reveal-i */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: calc(var(--reveal-i, 0) * 90ms);
+  }
+  [data-reveal].is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Cursor-following spotlight glow, shadcn/21st.dev-style hover cards */
+  .spotlight-card {
+    position: relative;
+    isolation: isolate;
+  }
+  .spotlight-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background: radial-gradient(480px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%), rgba(84, 195, 234, 0.16), transparent 65%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+  .spotlight-card:hover::before {
+    opacity: 1;
+  }
+  .spotlight-card > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  [data-parallax] {
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+#scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--color-miami), var(--color-coral));
+  z-index: 60;
+  pointer-events: none;
 }

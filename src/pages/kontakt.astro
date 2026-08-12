@@ -41,7 +41,7 @@ const steps = [
       <div class="mx-auto mt-14 grid max-w-5xl gap-6 sm:grid-cols-3">
         {
           steps.map((s, i) => (
-            <div class="card">
+            <div class="spotlight-card card" data-reveal style={`--reveal-i:${i}`}>
               <span class="font-mono text-xs text-miami-dark">Schritt {i + 1}</span>
               <h3 class="mt-2 font-display text-base font-semibold text-slate">{s.title}</h3>
               <p class="mt-2 text-sm leading-relaxed text-slate-soft">{s.text}</p>
@@ -52,6 +52,9 @@ const steps = [
 
       <div class="mx-auto mt-16 grid max-w-5xl gap-10 rounded-[2rem] border border-slate/8 bg-cloud p-8 sm:p-12 lg:grid-cols-[1fr_1.2fr]">
         <div>
+          <div class="mb-8 h-40 overflow-hidden rounded-2xl">
+            <img src="/assets/pages/contact-blueprint.jpg" alt="" class="h-full w-full object-cover" loading="lazy" />
+          </div>
           <h2 class="font-display text-2xl font-bold text-slate">Sprechen wir über Ihr Setup</h2>
           <p class="mt-4 text-sm leading-relaxed text-slate-soft">
             Füllen Sie das Formular aus — Ihr E-Mail-Programm öffnet sich mit einer vorbereiteten
