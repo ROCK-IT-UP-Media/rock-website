@@ -13,9 +13,11 @@
   --color-coral-dark: #e0431f;
   --color-cyan: #00f0ff;
 
-  --font-display: "Space Grotesk", "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque", "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Inter", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "Roboto Mono", ui-monospace, monospace;
+
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
 
   --shadow-glow-miami: 0 0 60px -12px rgba(84, 195, 234, 0.45);
   --shadow-glow-coral: 0 0 50px -10px rgba(255, 90, 54, 0.5);
@@ -85,16 +87,24 @@
     @apply inline-flex items-center gap-1.5 rounded-full border border-miami/20 bg-miami/8 px-3.5 py-1.5 font-mono text-xs font-medium uppercase tracking-wider text-miami-dark;
   }
 
-  /* Scroll-reveal: elements fade/slide in once, staggered via --reveal-i */
+  /* Scroll-reveal: elements fade/slide/sharpen in once, staggered via --reveal-i */
   [data-reveal] {
     opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(32px) scale(0.97);
+    filter: blur(6px);
+    transition: opacity 0.8s var(--ease-premium), transform 0.8s var(--ease-premium), filter 0.8s var(--ease-premium);
     transition-delay: calc(var(--reveal-i, 0) * 90ms);
   }
   [data-reveal].is-revealed {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+
+  /* Magnetic buttons: JS sets --mx / --my within a bounded radius on mousemove */
+  [data-magnetic] {
+    transform: translate(var(--mx, 0), var(--my, 0));
+    transition: transform 0.35s var(--ease-premium);
   }
 
   /* Cursor-following spotlight glow, shadcn/21st.dev-style hover cards */
@@ -131,6 +141,10 @@
     transition: none;
     opacity: 1;
     transform: none;
+    filter: none;
+  }
+  [data-magnetic] {
+    transition: none;
   }
   html {
     scroll-behavior: auto;
@@ -147,3 +161,31 @@
   z-index: 60;
   pointer-events: none;
 }
+
+/* Cursor-following glow — desktop, fine-pointer only */
+#cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 480px;
+  height: 480px;
+  margin-left: -240px;
+  margin-top: -240px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(84, 195, 234, 0.16), transparent 70%);
+  transform: translate3d(var(--cx, -100vw), var(--cy, -100vh), 0);
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: multiply;
+  transition: opacity 0.4s ease;
+  opacity: 0;
+}
+#cursor-glow.is-active {
+  opacity: 1;
+}
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  #cursor-glow {
+    display: none;
+  }
+}
+

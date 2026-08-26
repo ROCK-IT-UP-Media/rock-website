@@ -1,4 +1,5 @@
 ---
+import { ClientRouter, fade } from "astro:transitions";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/global.css";
@@ -33,59 +34,114 @@ const pageTitle = `${title} | ROCK IT UP Media`;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
+    <ClientRouter />
   </head>
   <body>
     <div id="scroll-progress-bar"></div>
+    <div id="cursor-glow"></div>
     <Header />
-    <main>
+    <main transition:animate={fade({ duration: "0.25s" })}>
       <slot />
     </main>
     <Footer />
 
     <script>
+      // The View Transitions API rejects the outgoing transition's `finished`
+      // promise with an InvalidStateError whenever a new navigation supersedes
+      // one already in flight (e.g. fast repeated clicks). It's a benign race,
+      // not a functional bug — the new navigation always completes correctly —
+      // so we only silence that specific rejection instead of all errors.
+      window.addEventListener("unhandledrejection", (event) => {
+        if (event.reason?.name === "InvalidStateError") {
+          event.preventDefault();
+        }
+      });
+
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      // Scroll-reveal stagger fade-ins
-      const revealEls = document.querySelectorAll<HTMLElement>("[data-reveal]");
-      if (revealEls.length && !reduceMotion) {
-        const io = new IntersectionObserver(
+      let io: IntersectionObserver | null = null;
+      let parallaxEls: HTMLElement[] = [];
+
+      function setupReveal() {
+        io?.disconnect();
+        const revealEls = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+        if (!revealEls.length) return;
+        if (reduceMotion) {
+          revealEls.forEach((el) => el.classList.add("is-revealed"));
+          return;
+        }
+        io = new IntersectionObserver(
           (entries) => {
             for (const entry of entries) {
               if (entry.isIntersecting) {
                 entry.target.classList.add("is-revealed");
-                io.unobserve(entry.target);
+                io!.unobserve(entry.target);
               }
             }
           },
           { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
         );
-        revealEls.forEach((el) => io.observe(el));
-      } else {
-        revealEls.forEach((el) => el.classList.add("is-revealed"));
+        revealEls.forEach((el) => io!.observe(el));
       }
 
-      // Cursor-following spotlight glow on cards
-      document.querySelectorAll<HTMLElement>(".spotlight-card").forEach((card) => {
-        card.addEventListener("mousemove", (e: MouseEvent) => {
-          const rect = card.getBoundingClientRect();
-          card.style.setProperty("--spotlight-x", `${e.clientX - rect.left}px`);
-          card.style.setProperty("--spotlight-y", `${e.clientY - rect.top}px`);
+      function setupSpotlight() {
+        document.querySelectorAll<HTMLElement>(".spotlight-card").forEach((card) => {
+          card.addEventListener("mousemove", (e: MouseEvent) => {
+            const rect = card.getBoundingClientRect();
+            card.style.setProperty("--spotlight-x", `${e.clientX - rect.left}px`);
+            card.style.setProperty("--spotlight-y", `${e.clientY - rect.top}px`);
+          });
         });
-      });
+      }
 
-      // Scroll progress bar
-      const progressBar = document.getElementById("scroll-progress-bar");
+      function setupMagnetic() {
+        document.querySelectorAll<HTMLElement>("[data-magnetic]").forEach((btn) => {
+          const strength = parseFloat(btn.getAttribute("data-magnetic-strength") || "0.25");
+          btn.addEventListener("mousemove", (e: MouseEvent) => {
+            const rect = btn.getBoundingClientRect();
+            const relX = e.clientX - rect.left - rect.width / 2;
+            const relY = e.clientY - rect.top - rect.height / 2;
+            btn.style.setProperty("--mx", `${relX * strength}px`);
+            btn.style.setProperty("--my", `${relY * strength}px`);
+          });
+          btn.addEventListener("mouseleave", () => {
+            btn.style.setProperty("--mx", "0px");
+            btn.style.setProperty("--my", "0px");
+          });
+        });
+      }
+
+      function setupNav() {
+        const toggle = document.getElementById("menu-toggle");
+        const menu = document.getElementById("mobile-menu");
+        toggle?.addEventListener("click", () => {
+          menu?.classList.toggle("hidden");
+        });
+        menu?.classList.add("hidden");
+
+        const path = window.location.pathname;
+        document.querySelectorAll<HTMLElement>("[data-nav-link]").forEach((link) => {
+          const href = link.getAttribute("data-nav-link") || "";
+          const active = href === "/" ? path === "/" : path.startsWith(href);
+          link.classList.toggle("text-miami-dark", active);
+          link.classList.toggle("text-slate", !active);
+        });
+      }
+
+      function refreshParallaxEls() {
+        parallaxEls = Array.from(document.querySelectorAll<HTMLElement>("[data-parallax]"));
+      }
+
       function updateProgress() {
+        const progressBar = document.getElementById("scroll-progress-bar");
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
         const progress = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
         if (progressBar) progressBar.style.width = `${progress}%`;
       }
 
-      // Parallax for [data-parallax] images
-      const parallaxEls = document.querySelectorAll<HTMLElement>("[data-parallax]");
       function updateParallax() {
         if (reduceMotion) return;
         const viewportH = window.innerHeight;
@@ -109,8 +165,34 @@ const pageTitle = `${title} | ROCK IT UP Media`;
         });
       }
 
-      window.addEventListener("scroll", onScroll, { passive: true });
-      onScroll();
+      function onCursorMove(e: MouseEvent) {
+        const glow = document.getElementById("cursor-glow");
+        if (!glow) return;
+        glow.style.setProperty("--cx", `${e.clientX}px`);
+        glow.style.setProperty("--cy", `${e.clientY}px`);
+        glow.classList.add("is-active");
+      }
+
+      function initPage() {
+        setupNav();
+        setupReveal();
+        setupSpotlight();
+        setupMagnetic();
+        refreshParallaxEls();
+        onScroll();
+
+        const w = window as unknown as { __rockGlobalListeners?: boolean };
+        if (!w.__rockGlobalListeners) {
+          w.__rockGlobalListeners = true;
+          window.addEventListener("scroll", onScroll, { passive: true });
+          window.addEventListener("resize", refreshParallaxEls);
+          if (!reduceMotion) {
+            window.addEventListener("mousemove", onCursorMove, { passive: true });
+          }
+        }
+      }
+
+      document.addEventListener("astro:page-load", initPage);
     </script>
   </body>
 </html>

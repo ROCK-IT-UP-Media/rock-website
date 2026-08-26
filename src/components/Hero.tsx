@@ -15,6 +15,20 @@ const fadeUp = (delay: number) => ({
   transition: { ...springTransition, delay },
 });
 
+const headlineWords = ["Ihre", "KI-Marketingabteilung."];
+const wordContainer = {
+  animate: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } },
+};
+const wordItem = {
+  initial: { opacity: 0, y: 28, filter: "blur(8px)" },
+  animate: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { ...springTransition, stiffness: 140 },
+  },
+};
+
 const slides = [
   { src: "/assets/hero/photo-1-celebration.jpg", alt: "Team feiert einen Marketing-Erfolg" },
   { src: "/assets/hero/photo-2-meeting.jpg", alt: "Strategiegespräch im Meetingraum" },
@@ -73,13 +87,29 @@ export default function Hero() {
           </motion.div>
 
           <motion.h1
-            {...fadeUp(0.08)}
+            initial="initial"
+            animate="animate"
+            variants={wordContainer}
             className="font-display text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[4.25rem]"
           >
-            Ihre KI-Marketingabteilung.
-            <br />
-            <span className="text-miami">Schlüsselfertig.</span>{" "}
-            <span className="text-coral">Autark.</span> <span>Marktdominant.</span>
+            <span className="block overflow-hidden">
+              {headlineWords.map((word) => (
+                <motion.span key={word} variants={wordItem} className="mr-3 inline-block">
+                  {word}
+                </motion.span>
+              ))}
+            </span>
+            <span className="block overflow-hidden">
+              <motion.span variants={wordItem} className="inline-block text-miami">
+                Schlüsselfertig.
+              </motion.span>{" "}
+              <motion.span variants={wordItem} className="inline-block text-coral">
+                Autark.
+              </motion.span>{" "}
+              <motion.span variants={wordItem} className="inline-block">
+                Marktdominant.
+              </motion.span>
+            </span>
           </motion.h1>
 
           <motion.p {...fadeUp(0.18)} className="mt-7 max-w-xl text-balance text-lg leading-relaxed text-white/85 md:text-xl">
@@ -89,7 +119,7 @@ export default function Hero() {
           </motion.p>
 
           <motion.div {...fadeUp(0.28)} className="mt-10 flex flex-col items-start gap-4 sm:flex-row">
-            <a href="/kontakt" className="btn-primary group bg-miami text-slate hover:bg-coral hover:text-white">
+            <a href="/kontakt" data-magnetic className="btn-primary group bg-miami text-slate hover:bg-coral hover:text-white">
               NYC AI-Department Blueprint buchen
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
             </a>

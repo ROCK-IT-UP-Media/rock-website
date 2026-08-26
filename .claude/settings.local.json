@@ -51,7 +51,8 @@
       "Bash(textutil -convert txt -stdout \"/Users/christoph/Library/CloudStorage/GoogleDrive-hello.bybene@gmail.com/Meine Ablage/CLAUDE PROJECTs/Projekte/ROCK - Website/Infos/Businesskonzept ROCK IT UP Media V2.docx\")",
       "Bash(chmod +x \"/Users/christoph/Library/CloudStorage/GoogleDrive-hello.bybene@gmail.com/Meine Ablage/CLAUDE PROJECTs/Projekte/ROCK - Website/scripts/generate-photos.sh\")",
       "Bash(./scripts/generate-photos.sh)",
-      "Bash(echo \"env-check-exit:$?\")"
+      "Bash(echo \"env-check-exit:$?\")",
+      "Bash(echo \"env-exit:$?\")"
     ]
   }
 }

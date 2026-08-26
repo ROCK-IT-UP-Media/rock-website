@@ -1,8 +1,5 @@
 ---
 import { mainNav } from "../data/nav";
-
-const path = Astro.url.pathname;
-const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
 ---
 
 <header class="sticky top-0 z-50 border-b border-slate/8 bg-white/80 backdrop-blur-lg">
@@ -20,10 +17,8 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
           <div class="group relative">
             <a
               href={item.href}
-              class:list={[
-                "flex items-center gap-1 rounded-full px-4 py-2 font-display text-sm font-medium transition-colors",
-                isActive(item.href) ? "text-miami-dark" : "text-slate hover:text-miami-dark",
-              ]}
+              data-nav-link={item.href}
+              class="flex items-center gap-1 rounded-full px-4 py-2 font-display text-sm font-medium text-slate transition-colors hover:text-miami-dark"
             >
               {item.label}
               {item.children && (
@@ -49,7 +44,7 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
     </nav>
 
     <div class="flex items-center gap-3">
-      <a href="/kontakt" class="btn-primary hidden lg:inline-flex">
+      <a href="/kontakt" data-magnetic data-magnetic-strength="0.35" class="btn-primary hidden lg:inline-flex">
         Blueprint buchen
       </a>
       <button id="menu-toggle" aria-label="Menü öffnen" class="grid h-11 w-11 place-items-center rounded-full border border-slate/10 lg:hidden">
@@ -76,10 +71,3 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
   </div>
 </header>
 
-<script>
-  const toggle = document.getElementById("menu-toggle");
-  const menu = document.getElementById("mobile-menu");
-  toggle?.addEventListener("click", () => {
-    menu?.classList.toggle("hidden");
-  });
-</script>
