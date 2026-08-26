@@ -1,0 +1,19 @@
+---
+interface Props {
+  items: string[];
+  variant?: "light" | "dark";
+}
+
+const { items, variant = "light" } = Astro.props;
+---
+
+<div class="marquee-shell" data-variant={variant}>
+  <div class="marquee-track">
+    <div class="marquee-row">
+      {items.map((item) => <span class="marquee-item">{item}</span>)}
+    </div>
+    <div class="marquee-row" aria-hidden="true">
+      {items.map((item) => <span class="marquee-item">{item}</span>)}
+    </div>
+  </div>
+</div>

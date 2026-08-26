@@ -47,7 +47,9 @@ const objections = [
   description="Christoph Benedikt, Gründer von ROCK IT UP Media: jahrzehntelange Marketing- und Krisenkommunikations-Expertise, gebündelt in einer autarken KI-Marketinginfrastruktur mit 162 spezialisierten AI-Agents."
 >
   <section class="relative overflow-hidden bg-slate pb-0 pt-20 text-white">
-    <img src="/assets/pages/about-founder.jpg" alt="" class="absolute inset-0 h-full w-full object-cover opacity-55" />
+    <div class="photo-duotone absolute inset-0">
+      <img src="/assets/pages/about-founder.jpg" alt="" class="h-full w-full object-cover opacity-55" />
+    </div>
     <div class="absolute inset-0 bg-gradient-to-t from-slate via-slate/75 to-slate/40"></div>
     <div class="container-rock relative mx-auto max-w-3xl pb-24 text-center">
       <span class="badge border-miami/30 bg-miami/15 text-miami">Über Uns</span>
@@ -165,13 +167,15 @@ const objections = [
   </section>
 
   <section class="relative overflow-hidden border-t border-slate/8 bg-slate py-24 text-white">
-    <img
-      src="/assets/pages/agents-network.jpg"
-      alt=""
-      class="absolute inset-0 h-full w-full object-cover opacity-40"
-      data-parallax
-      data-parallax-strength="0.08"
-    />
+    <div class="photo-duotone absolute inset-0">
+      <img
+        src="/assets/pages/agents-network.jpg"
+        alt=""
+        class="h-full w-full object-cover opacity-40"
+        data-parallax
+        data-parallax-strength="0.08"
+      />
+    </div>
     <div class="absolute inset-0 bg-slate/50"></div>
     <div class="glow-orb -top-32 left-1/4 h-96 w-96 bg-miami/15"></div>
     <div class="glow-orb bottom-0 right-0 h-80 w-80 bg-coral/10"></div>
@@ -193,7 +197,7 @@ const objections = [
         {
           leadershipAgents.map((agent, i) => (
             <div class="spotlight-card group overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] transition-colors hover:bg-white/[0.06]" data-reveal style={`--reveal-i:${i}`}>
-              <div class="relative h-48 overflow-hidden">
+              <div class="photo-duotone relative h-48 overflow-hidden">
                 <img src={agent.photo} alt={agent.name} class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
                 <div class="absolute inset-0 bg-gradient-to-t from-slate via-slate/10 to-transparent" />
               </div>

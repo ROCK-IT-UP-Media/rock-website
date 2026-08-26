@@ -42,7 +42,7 @@ export default function HorizontalShowcase({
             <a
               key={item.number}
               href={item.href}
-              className="group relative h-[58vh] w-[80vw] shrink-0 overflow-hidden rounded-[2rem] bg-slate shadow-card-lg sm:w-[48vw] lg:w-[30vw]"
+              className="photo-duotone group relative h-[58vh] w-[80vw] shrink-0 overflow-hidden rounded-[2rem] bg-slate shadow-card-lg sm:w-[48vw] lg:w-[30vw]"
             >
               <img
                 src={item.image}

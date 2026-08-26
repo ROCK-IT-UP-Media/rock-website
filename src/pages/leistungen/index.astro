@@ -3,7 +3,10 @@ import Layout from "../../layouts/Layout.astro";
 import Icon from "../../components/ui/Icon.astro";
 import ModulesOverview from "../../components/sections/ModulesOverview.astro";
 import HorizontalShowcase from "../../components/HorizontalShowcase.tsx";
+import Marquee from "../../components/Marquee.astro";
 import { modules, retainers } from "../../data/modules";
+
+const tickerItems = [...modules.map((m) => m.shortTitle), ...retainers.map((r) => r.title)];
 
 const showcaseItems = modules.map((m) => ({
   number: m.number,
@@ -20,7 +23,9 @@ const showcaseItems = modules.map((m) => ({
   description="Sechs Module für Ihre autarke KI-Marketinginfrastruktur — einzeln buchbar oder als vollständiges NYC AI-Department Blueprint. Plus standalone Retainer-Services."
 >
   <section class="relative overflow-hidden bg-slate pb-0 pt-20 text-white">
-    <img src="/assets/pages/leistungen-banner.jpg" alt="" class="absolute inset-0 h-full w-full object-cover opacity-60" />
+    <div class="photo-duotone absolute inset-0">
+      <img src="/assets/pages/leistungen-banner.jpg" alt="" class="h-full w-full object-cover opacity-60" />
+    </div>
     <div class="absolute inset-0 bg-gradient-to-t from-slate via-slate/70 to-slate/40"></div>
     <div class="container-rock relative mx-auto max-w-3xl pb-20 text-center">
       <span class="badge border-miami/30 bg-miami/15 text-miami">Leistungen</span>
@@ -33,6 +38,10 @@ const showcaseItems = modules.map((m) => ({
       </p>
     </div>
   </section>
+
+  <div class="border-y border-slate/8 bg-white py-5">
+    <Marquee items={tickerItems} variant="light" />
+  </div>
 
   <HorizontalShowcase
     items={showcaseItems}

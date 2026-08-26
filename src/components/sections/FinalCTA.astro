@@ -4,20 +4,23 @@ import Icon from "../ui/Icon.astro";
 
 <section class="py-24">
   <div class="container-rock">
-    <div class="relative overflow-hidden rounded-[2.5rem] bg-slate px-8 py-16 text-center sm:px-16">
-      <div class="glow-orb -top-20 left-10 h-72 w-72 bg-miami/25"></div>
-      <div class="glow-orb -bottom-20 right-10 h-72 w-72 bg-coral/20"></div>
+    <div
+      class="relative overflow-hidden rounded-[2.5rem] px-8 py-16 text-center sm:px-16"
+      style="background: linear-gradient(135deg, var(--color-miami) 0%, var(--color-miami-dark) 55%, var(--color-coral) 130%);"
+    >
+      <div class="glow-orb -top-20 left-10 h-72 w-72 bg-white/20"></div>
+      <div class="glow-orb -bottom-20 right-10 h-72 w-72 bg-sunshine/25"></div>
 
       <div class="relative">
-        <span class="badge border-white/15 bg-white/5 text-white/70">Exklusivitäts-Garantie</span>
-        <h2 class="mx-auto mt-6 max-w-2xl font-display text-3xl font-bold leading-tight text-white md:text-4xl">
+        <span class="badge border-white/25 bg-white/15 text-white">Exklusivitäts-Garantie</span>
+        <h2 class="mx-auto mt-6 max-w-2xl font-display text-3xl font-bold leading-tight text-slate md:text-4xl">
           Maximal 2–3 Neukunden-Setups pro Monat.
         </h2>
-        <p class="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-white/60">
+        <p class="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-slate/80">
           Für Tiefgang, Perfektion und persönliche C-Level-Betreuung. Sichern Sie sich Ihren
           vertraulichen NYC AI-Department Blueprint — inklusive individueller ROI-Berechnung.
         </p>
-        <a href="/kontakt" data-magnetic class="btn-primary mt-9 inline-flex">
+        <a href="/kontakt" data-magnetic class="btn-primary mt-9 inline-flex bg-slate text-white shadow-none hover:bg-white hover:text-slate">
           Blueprint-Termin anfragen
           <Icon name="arrow-right" size={16} />
         </a>

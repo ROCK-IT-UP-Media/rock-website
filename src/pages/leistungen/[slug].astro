@@ -28,7 +28,9 @@ const roleRows =
 
 <Layout title={item.title} description={item.summary}>
   <div class="relative h-[46vh] min-h-[320px] w-full overflow-hidden md:h-[58vh]">
-    <img src={bannerImage} alt="" class="h-full w-full object-cover" data-parallax data-parallax-strength="0.15" />
+    <div class="photo-duotone absolute inset-0">
+      <img src={bannerImage} alt="" class="h-full w-full object-cover" data-parallax data-parallax-strength="0.15" />
+    </div>
     <div class="absolute inset-0 bg-gradient-to-t from-slate via-slate/40 to-slate/10"></div>
     <div class="absolute inset-0 bg-gradient-to-r from-miami/25 via-transparent to-transparent mix-blend-multiply"></div>
     <div class="container-rock absolute inset-x-0 bottom-0 pb-10">
@@ -153,7 +155,7 @@ const roleRows =
               data-reveal
               style={`--reveal-i:${i}`}
             >
-              <div class="h-32 overflow-hidden">
+              <div class="photo-duotone h-32 overflow-hidden">
                 <img
                   src={`/assets/modules/${m.slug}.jpg`}
                   alt=""
@@ -175,21 +177,24 @@ const roleRows =
 
   <section class="py-20">
     <div class="container-rock">
-      <div class="relative mx-auto max-w-3xl overflow-hidden rounded-[2rem] bg-slate p-8 text-center sm:p-12">
-        <div class="glow-orb -top-20 left-10 h-64 w-64 bg-miami/30"></div>
-        <div class="glow-orb -bottom-20 right-10 h-64 w-64 bg-coral/20"></div>
+      <div
+        class="relative mx-auto max-w-3xl overflow-hidden rounded-[2rem] p-8 text-center sm:p-12"
+        style="background: linear-gradient(135deg, var(--color-miami) 0%, var(--color-miami-dark) 55%, var(--color-coral) 130%);"
+      >
+        <div class="glow-orb -top-20 left-10 h-64 w-64 bg-white/20"></div>
+        <div class="glow-orb -bottom-20 right-10 h-64 w-64 bg-sunshine/25"></div>
         <div class="relative">
-          <p class="font-mono text-xs uppercase tracking-wide text-white/50">Investment</p>
-          <p class="mt-3 font-display text-4xl font-bold text-white sm:text-5xl">{item.price}</p>
-          <p class="mt-1 text-sm text-white/60">{item.priceSuffix}</p>
+          <p class="font-display text-xs font-semibold text-slate/70">Investment</p>
+          <p class="mt-3 font-display text-4xl font-bold text-slate sm:text-5xl">{item.price}</p>
+          <p class="mt-1 text-sm text-slate/70">{item.priceSuffix}</p>
           {"savings" in item && item.savings && (
-            <p class="mx-auto mt-5 max-w-md rounded-xl bg-miami/15 px-5 py-3 text-sm text-miami">{item.savings}</p>
+            <p class="mx-auto mt-5 max-w-md rounded-xl bg-white/40 px-5 py-3 text-sm text-slate">{item.savings}</p>
           )}
-          <a href="/kontakt" data-magnetic class="btn-primary mt-8 inline-flex">
+          <a href="/kontakt" data-magnetic class="btn-primary mt-8 inline-flex bg-slate text-white shadow-none hover:bg-white hover:text-slate">
             Blueprint-Termin sichern
             <Icon name="arrow-right" size={16} />
           </a>
-          <p class="mt-4 text-xs text-white/40">Unverbindliches Erstgespräch, keine versteckten Kosten.</p>
+          <p class="mt-4 text-xs text-slate/60">Unverbindliches Erstgespräch, keine versteckten Kosten.</p>
         </div>
       </div>
     </div>

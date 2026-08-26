@@ -1,8 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.tsx";
+import ScrollCanvas from "../components/ScrollCanvas.astro";
 import HorizontalShowcase from "../components/HorizontalShowcase.tsx";
+import Marquee from "../components/Marquee.astro";
 import ProblemSolution from "../components/sections/ProblemSolution.astro";
+import Manifesto from "../components/sections/Manifesto.astro";
 import Pillars from "../components/sections/Pillars.astro";
 import AgentsShowcase from "../components/sections/AgentsShowcase.astro";
 import ObjectionsProof from "../components/sections/ObjectionsProof.astro";
@@ -17,14 +20,27 @@ const showcaseItems = modules.map((m) => ({
   image: `/assets/modules/${m.slug}.jpg`,
   href: `/leistungen/${m.slug}`,
 }));
+
+const tickerItems = [
+  ...modules.map((m) => m.shortTitle),
+  "1 Senior-Stratege",
+  "162 AI-Agents",
+  "EU-vServer · DSGVO-konform",
+];
 ---
 
 <Layout
   title="Ihre KI-Marketingabteilung"
   description="ROCK IT UP Media baut autarke, maßgeschneiderte KI-Marketinginfrastrukturen direkt in Ihrem Unternehmen — 1 Senior Strategist, 162 AI-Agents, EU-vServer, DSGVO-konform."
 >
-  <Hero client:load />
+  <ScrollCanvas heightVh={220}>
+    <Hero client:load />
+  </ScrollCanvas>
+  <div class="border-y border-slate/8 bg-paper py-5">
+    <Marquee items={tickerItems} variant="light" />
+  </div>
   <ProblemSolution />
+  <Manifesto />
   <Pillars />
   <HorizontalShowcase items={showcaseItems} client:visible />
   <AgentsShowcase />

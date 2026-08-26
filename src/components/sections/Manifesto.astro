@@ -1,0 +1,66 @@
+---
+// The brand's own metaphor, given its own stage: "Wenn ROCK IT UP Media die
+// Bühne betritt, geht das Licht an…" — moved here from a small aside quote
+// into the emotional centerpiece of the homepage.
+const headline = "Wenn wir die Bühne betreten, geht das Licht an.";
+const headlineWords = headline.split(" ");
+
+const stats = [
+  { end: 162, suffix: "", label: "AI-Agents im Ensemble" },
+  { end: 1, suffix: "", label: "Senior-Stratege an der Spitze" },
+  { end: 45, suffix: "", label: "Tage bis zur eigenen Bühne" },
+];
+---
+
+<section class="relative overflow-hidden bg-slate py-28 text-white">
+  <div class="glow-orb -top-24 left-1/3 h-[26rem] w-[26rem] bg-miami/20"></div>
+  <div class="glow-orb bottom-0 right-0 h-80 w-80 bg-coral/15"></div>
+  <div class="glow-orb top-1/2 left-0 h-64 w-64 bg-sunshine/10"></div>
+
+  <div class="container-rock relative">
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="badge border-white/15 bg-white/5 text-white/70">Die Philosophie</span>
+
+      <h2 class="mt-7 font-display text-3xl font-bold leading-[1.12] sm:text-4xl md:text-5xl">
+        {
+          headlineWords.map((word, i) => (
+            <span class="mr-3 inline-block" data-reveal style={`--reveal-i:${i}`}>
+              {word}
+            </span>
+          ))
+        }
+      </h2>
+
+      <div class="mx-auto mt-8 flex justify-center text-miami" aria-hidden="true">
+        <div class="soundwave" style="height: 34px;">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <p class="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-white/70" data-reveal>
+        Der erste Akkord dröhnt durch die Halle. Die Energie katapultiert augenblicklich durch
+        die Decke. Genau so soll sich Ihr Marketing anfühlen — kein Pflichttermin im Kalender,
+        sondern ein Auftritt, der bleibt.
+      </p>
+
+      <p class="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-white/70" data-reveal>
+        Kein Konzert lebt von einem einzelnen Talent. Es lebt vom Zusammenspiel: ein erfahrener
+        Kopf, der den Sound kennt — und ein ganzes Ensemble, das ihn in Minuten statt Wochen live
+        spielt. Genau so bauen wir Ihre Marketingabteilung.
+      </p>
+    </div>
+
+    <div class="mx-auto mt-16 grid max-w-3xl gap-6 sm:grid-cols-3">
+      {
+        stats.map((s, i) => (
+          <div class="rounded-[1.5rem] border border-white/10 bg-white/[0.04] px-6 py-8 text-center" data-reveal style={`--reveal-i:${i + 2}`}>
+            <p class="font-display text-4xl font-bold text-white">
+              <span data-counter-end={s.end} data-counter-suffix={s.suffix}>0</span>
+            </p>
+            <p class="mt-2 text-sm leading-snug text-white/55">{s.label}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

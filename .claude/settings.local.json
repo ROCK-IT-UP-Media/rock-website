@@ -52,7 +52,19 @@
       "Bash(chmod +x \"/Users/christoph/Library/CloudStorage/GoogleDrive-hello.bybene@gmail.com/Meine Ablage/CLAUDE PROJECTs/Projekte/ROCK - Website/scripts/generate-photos.sh\")",
       "Bash(./scripts/generate-photos.sh)",
       "Bash(echo \"env-check-exit:$?\")",
-      "Bash(echo \"env-exit:$?\")"
+      "Bash(echo \"env-exit:$?\")",
+      "Bash(echo \"env-exit-after-add:$?\")",
+      "Bash(gh repo *)",
+      "Bash(chmod +x \"/Users/christoph/Library/CloudStorage/GoogleDrive-hello.bybene@gmail.com/Meine Ablage/CLAUDE PROJECTs/Projekte/ROCK - Website/scripts/generate-hero-flight.sh\")",
+      "Bash(mkdir -p src/assets/hero-flight)",
+      "Bash(./scripts/generate-hero-flight.sh)",
+      "Bash(chmod +x \"/Users/christoph/Library/CloudStorage/GoogleDrive-hello.bybene@gmail.com/Meine Ablage/CLAUDE PROJECTs/Projekte/ROCK - Website/scripts/build-hero-flight.sh\")",
+      "Bash(./scripts/build-hero-flight.sh)",
+      "Bash(sed -i '' 's/-qscale:v 3/-qscale:v 6/' scripts/build-hero-flight.sh)",
+      "Bash(rm -rf public/frames)",
+      "Bash(ffmpeg -y -i src/assets/hero-flight/hero-flight.mp4 -vsync 0 -c:v mjpeg -qscale:v 6 public/frames/frame_%03d.jpg)",
+      "Bash(mkdir -p public/frames)",
+      "Bash(ffmpeg -y -i src/assets/hero-flight/hero-flight.mp4 -vsync 0 -vf scale=960:540 -c:v mjpeg -qscale:v 8 public/frames/frame_%03d.jpg)"
     ]
   }
 }
